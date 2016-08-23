@@ -9,26 +9,124 @@
 <p>
     @Html.ActionLink("Criar Nova Conta", "CriarConta")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table id="myDataTable" class="table">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.PagarContaId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.PagarContaId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.PagarContaId })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.PagarContaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                Parcelas
+            </th>
+            <th>
+                Observação
+            </th>
+            <th>
+                Tipo de Lançamento
+            </th>
+            <th>
+                Valor Total
+            </th>
         </tr>
-    }
+    </thead>
+
+    @*
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    ID
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+
+                </td>
+
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.PagarContaId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.PagarContaId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.PagarContaId })
+        </td>
+
+            </tr>
+
+        }
+    *@
 
 </table>
+
+@Styles.Render("~/bundles/Content/DataTables")
+@Scripts.Render("~/bundles/scripts/DataTables")
+
+@section scripts {
+    <script>
+        $(document)
+            .ready(function () {
+                var oTable = $('#myDataTable')
+                    .dataTable({
+                        "iDisplayLength": 25,
+                        "bSortClasses": false,
+                        "bStateSave": false,
+                        "bPaginate": true,
+                        "bAutoWidth": false,
+                        "bDestroy": true,
+                        "autoFill": true,
+                        "responsive": true,
+                        "dom": 'Bfrtip',
+                        "buttons": {
+                            buttons: ['copy', 'csv', 'excel']
+                        },
+                        "colReorder": true,
+                        "oLanguage": { "sSearch": "Procurar:", "sProcessing": "Processando" },
+                        "bJQueryUI": false,
+                        "bServerSide": true,
+                        "sAjaxSource": "@Url.Action("AjaxHandler", "PagarContas", routeValues: new {Area = ""})",
+                        "bProcessing": true,
+                        @*
+                        "aoColumns": [
+
+                                                                    {
+                                        "sName": "ID",
+                                        "bSearchable": false,
+                                        "bSortable": false
+                                    },
+
+    { "sName": "Descricao" }, { "sName": "Parcelas" }, { "sName": "Observação" }, { "sName": "Tipo de Lançamento" }, { "sName": "Valor Total" }
+                        ],
+                                                                                            *@
+
+                        "columnDefs": [
+                            { "sName": "PagarContaID", "targets": 0, "bSearchable": false, "bSortable": false, "visible": false },
+                            { "sName": "Descrição", "targets": 1 },
+                            {
+                                "sName": "NumeroParcelas", "targets": 2,
+                                "render": function (data, type, full, meta) {
+                                    var ix = meta.row;
+                                    var value = meta.sName;
+                                    var rowId = full[0];
+                                    var link = '@Url.Action("Detalhes", "PagarContas", routeValues: new { Area = "", id = "_rowid"})';
+                                    link = link.replace('_rowid', rowId);
+                                    debugger;
+                                    //return "Row number is " + ix;
+                                    return '<a href="' + link + '">' + '<i class="fa fa-money" data-toggle = "tooltip" title="Detalhamento do Parcelamento" ></i>' + '</a> \t (' + (data) + ')';
+                                }
+                            },
+                            { "sName": "Observação", "targets": 3 },
+                            { "sName": "Tipo de Lançamento", "targets": 4 },
+                            { "sName": "Valor Total", "targets": 5 }
+                        ]
+
+                    });
+            });
+
+
+
+
+    </script>
+}

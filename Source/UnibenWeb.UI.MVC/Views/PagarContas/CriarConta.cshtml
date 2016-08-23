@@ -130,23 +130,6 @@
 <div class="col-md-12">
     <a href="#" class="btn btn-default" onclick="SalvarConta();"> Criar Conta </a>
 </div>
-
-<div class="col-md-12" id="detalheParcelas">
-    <h2>Parcelas</h2>
-    <table id="myDataTable" class="display">
-        <thead>
-            <tr>
-                <th>COL1</th>
-                <th>COL2</th>
-                <th>COL3</th>
-                <th>COL4</th>
-                <th>COL5</th>
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-    </table>
 </div>
 
 
@@ -167,7 +150,7 @@
             var dataemissao = $("#DataEmissao").val();
             var descricao = $("#Descricao").val();
             var numeroparcelas = $("#NumeroParcelas").val();
-            var obs = $("#Obs").val();
+            var observacao = $("#Observacao").val();
             var tipoConta = $("#TipoConta").val();
             var valortotal = $("#ValorTotal").val();
             var centrocustoid = $("#CentroCustoId").val();
@@ -192,7 +175,7 @@
                     DataEmissao: dataemissao,
                     Descricao: descricao,
                     NumeroParcelas: numeroparcelas,
-                    Obs: obs,
+                    Observacao: observacao,
                     TipoConta: tipoConta,
                     ValorTotal: valortotal,
                     CentroCustoId: centrocustoid,
@@ -201,7 +184,8 @@
                 },
                 success: function (data) {
                     if (data.Resultado > 0) {
-                        ListarEnderecos(data.Resultado);
+                        //ListarEnderecos(data.Resultado);
+                        window.location.href = '/Administrativo/ContasPagar/ListarContas';
                     } else {
                         for (var i = 0; i < data.Resultado['Erros'].length; i++) {
                             $('#divValidate').append($('<li>', {
@@ -227,44 +211,5 @@
   webshims.setOptions('waitReady', false);
   webshims.setOptions('forms-ext', {types: 'date'});
   webshims.polyfill('forms forms-ext');
-
-  $(document).ready(function () {
-      debugger;
-    var oTable = $('#myDataTable').dataTable({
-        "iDisplayLength": 25,
-        "bSortClasses": false,
-        "bStateSave": false,
-        "bPaginate": true,
-        "bAutoWidth": false,
-        "bDestroy": true,
-        "autoFill": true,
-        "responsive": true,
-        "colReorder": true,
-        "dom": 'Bfrtip',
-        "buttons": {
-            buttons: ['copy', 'csv', 'excel']
-        },
-        "bJQueryUI": false,
-        "bServerSide": true,
-        "sAjaxSource": "@Url.Action("AjaxHandler", "PagarContas", routeValues: new { Area = "" })",
-        "bProcessing": true,
-        "aoColumns": [
-            {
-                "sName": "COL1",
-                "bSearchable": false,
-                "bSortable": false,
-                "fnRender": function (oObj) {
-                    return '<a href=\"Cadastro/Pessoa/Details/' + oObj.aData[0] + '\">View</a>';
-                }
-            },
-            { "sName": "COL1" },
-            { "sName": "COL2" },
-            { "sName": "COL3" },
-            { "sName": "COL4" }
-        ]
-    });
-});
-
-
 </script>
 }

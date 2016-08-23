@@ -17,7 +17,9 @@ namespace UnibenWeb.Domain.Entities
 
         [Key]
         public int CentroCustoId { get; set; }
+        public string CentroDeCusto { get; set; }
         public string Descricao { get; set; }
+        public string CentroDeCustoPai { get; set; }
         public string Obs { get; set; }
 
         // ======================================|

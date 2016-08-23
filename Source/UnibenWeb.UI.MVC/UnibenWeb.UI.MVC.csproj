@@ -203,6 +203,7 @@
     <Compile Include="Controllers\Identity\RolesAdminController.cs" />
     <Compile Include="Controllers\Identity\UserAdminController.cs" />
     <Compile Include="Controllers\OperadorasController.cs" />
+    <Compile Include="Controllers\PagarContaParcelasController.cs" />
     <Compile Include="Controllers\PagarContasController.cs" />
     <Compile Include="Controllers\PessoasController.cs" />
     <Compile Include="Controllers\ProdutosController.cs" />
@@ -532,9 +533,11 @@
     <Content Include="Views\Operadoras\CriarOperadora.cshtml" />
     <Content Include="Views\PagarContas\ListarContas.cshtml" />
     <Content Include="Views\PagarContas\CriarConta.cshtml" />
+    <Content Include="Views\PagarContas\Detalhes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\PagarContaParcelas\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -178,6 +178,9 @@ namespace UnibenWeb.UI.MVC.Controllers
         {
             var pessoas = _pessoaAppService.BuscaTodos(0, 50);
             IEnumerable<PessoaVM> filteredCompanies;
+
+            
+
             //Check whether the companies should be filtered by keyword
             if (!string.IsNullOrEmpty(param.sSearch))
             {
