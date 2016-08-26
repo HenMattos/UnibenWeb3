@@ -24,9 +24,9 @@ namespace UnibenWeb.Domain.Services
            return _baseReadOnlyRepository.Pesquisar<T>(offsetRows, numRows, pesquisa, tabela);
         }
 
-        public IEnumerable<T> Pesquisar<T>(int offsetRows, int numRows, string pesquisa, string tabela, string join)
+        public IEnumerable<T> Pesquisar<T>(string table, int offsetRows, string join, int numRows, string where, string select, string order)
         {
-            return _baseReadOnlyRepository.PesquisarJoinWhere<T>(offsetRows, numRows, pesquisa, tabela, join);
+            return _baseReadOnlyRepository.Pesquisar<T>(table, offsetRows, join, numRows, where, select, order);
         }
 
     }

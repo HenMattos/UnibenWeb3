@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using UnibenWeb.Application.Interface;
 using UnibenWeb.Application.ViewModels;
@@ -27,12 +28,14 @@ namespace UnibenWeb.UI.MVC.Controllers
         public ActionResult ListarContas()
         {
             return View(_baseAppService.Pesquisar<PagarContaVm>(0, 999, "", "PagarContas"));
+
         }
 
 
         public ActionResult CriarConta()
         {
-            ViewBag.Pessoas = _baseAppService.ListasDeSelecao<PessoaVM>("PessoaId", "Nome", "Pessoas", " Descricao = 'Fornecedor' ", " join [dbo].[PessoaTipos] tb2 on tb2.PessoaTipoId = tb.PessoaTipoId ");
+            //ViewBag.Pessoas = _baseAppService.ListasDeSelecao<PessoaVM>("PessoaId", "Nome", "Pessoas", " Descricao = 'Fornecedor' ", " join [dbo].[PessoaTipos] tb2 on tb2.PessoaTipoId = tb.PessoaTipoId ", " tb.* ");
+            ViewBag.Pessoas = _baseAppService.ListasDeSelecao<PessoaVM>("Pessoas", 0, " join [dbo].[PessoaTipos] tb2 on tb2.PessoaTipoId = tb.PessoaTipoId ", 0, "Descricao = 'Fornecedor'", " tb.* ", "Nome", "PessoaId", "Nome");
             ViewBag.CentroCustos = _baseAppService.ListasDeSelecao<CentroCustoVm>("CentroCustoId", "Descricao", "CentroCustos", "");
             return View();
         }
@@ -74,74 +77,35 @@ namespace UnibenWeb.UI.MVC.Controllers
 
         public ActionResult AjaxHandler(JQueryDataTableParamModel param)
         {
-            //var pessoas = _pessoaAppService.BuscaTodos(0, 50);
-            var contaPagar = _baseAppService.Pesquisar<PagarContaVm>(0, 999, "", "PagarContas");
-            IEnumerable<PagarContaVm> filteredContas;
+            var cont = _baseAppService.Pesquisar<int>("PagarContas", 0, "join [dbo].[CentroCustos] tb2 on tb2.CentroCustoId = tb.CentroCustoId", 0, "", " count(*) as NumRegistros ", "1");
+            IEnumerable<ContaPagarComCentroCustoVm> filteredContas;
             //Check whether the companies should be filtered by keyword
-            if (!string.IsNullOrEmpty(param.sSearch))
-            {
-                //Used if particulare columns are filtered 
-                var nameFilter = Convert.ToString(Request["sSearch_1"]);
-                var addressFilter = Convert.ToString(Request["sSearch_2"]);
-                var townFilter = Convert.ToString(Request["sSearch_3"]);
 
-                //Optionally check whether the columns are searchable at all 
-                var isNameSearchable = Convert.ToBoolean(Request["bSearchable_1"]);
-                var isAddressSearchable = Convert.ToBoolean(Request["bSearchable_2"]);
-                var isTownSearchable = Convert.ToBoolean(Request["bSearchable_3"]);
+            var calculatedParams = param.GetCalculatedParams<ContaPagarComCentroCustoVm>(Request.QueryString);
 
-                filteredContas = _baseAppService.Pesquisar<PagarContaVm>(0, 999, "", "PagarContas")
-                   .Where(c => isNameSearchable && (Convert.ToString(c.Descricao)).ToLower().Contains(param.sSearch.ToLower())
-                               ||
-                               isAddressSearchable && (Convert.ToString(c.NumeroParcelas)).ToLower().Contains(param.sSearch.ToLower())
-                               ||
-                               isTownSearchable && (Convert.ToString(c.Observacao)).ToLower().Contains(param.sSearch.ToLower())
-                               ||
-                               isTownSearchable && (Convert.ToString(c.TipoLancamento)).ToLower().Contains(param.sSearch.ToLower())
-                               ||
-                               isTownSearchable && (Convert.ToString(c.ValorTotal)).ToLower().Contains(param.sSearch.ToLower())
-                               );
-            }
-            else
-            {
-                filteredContas = contaPagar;
-            }
+            filteredContas = _baseAppService.Pesquisar<ContaPagarComCentroCustoVm>(
+                "PagarContas",
+                param.iDisplayStart,
+                "join [dbo].[CentroCustos] tb2 on tb2.CentroCustoId = tb.CentroCustoId",
+                param.iDisplayLength,
+                calculatedParams.ToArray()[0] + calculatedParams.ToArray()[1],
+                " tb.*, tb2.Descricao as CentroCustoDescricao ",
+                calculatedParams.ToArray()[2]);
 
-            var isDescricaoSortable = Convert.ToBoolean(Request["bSortable_1"]);
-            var isNumeroParcelasSortable = Convert.ToBoolean(Request["bSortable_2"]);
-            var isObservacaoSortable = Convert.ToBoolean(Request["bSortable_3"]);
-            var isTipoLancamentoSortable = Convert.ToBoolean(Request["bSortable_4"]);
-            var isValorTotalSortable = Convert.ToBoolean(Request["bSortable_5"]);
-
-            var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
-
-            Func<PagarContaVm, string> orderingFunction = (c => sortColumnIndex == 1 && isDescricaoSortable ? Convert.ToString(c.Descricao) :
-                                                           sortColumnIndex == 2 && isNumeroParcelasSortable ? Convert.ToString(c.NumeroParcelas) :
-                                                           sortColumnIndex == 3 && isObservacaoSortable ? Convert.ToString(c.Observacao) :
-                                                           sortColumnIndex == 4 && isTipoLancamentoSortable ? Convert.ToString(c.TipoLancamento) :
-                                                           sortColumnIndex == 5 && isValorTotalSortable ? Convert.ToString(c.ValorTotal) :
-                                                           "");
-
-
-            var sortDirection = Request["sSortDir_0"];
-            if (sortDirection == "asc")
-                filteredContas = filteredContas.OrderBy(orderingFunction);
-            else
-                filteredContas = filteredContas.OrderByDescending(orderingFunction);
-
-            var displayedContas = filteredContas.Skip(param.iDisplayStart).Take(param.iDisplayLength);
-            var result = from c in displayedContas
+            var result = from c in filteredContas // displayedContas 
                          select new[] {
-                 Convert.ToString(c.PagarContaId),
+                Convert.ToString(c.PagarContaId),
                 Convert.ToString(c.Descricao),
+                Convert.ToString(c.CentroCustoDescricao),
                 Convert.ToString(c.NumeroParcelas),
                 Convert.ToString(c.Observacao),
                 Convert.ToString(c.TipoLancamento),
                 Convert.ToString(c.ValorTotal)};
+
             return Json(new
             {
                 sEcho = param.sEcho,
-                iTotalRecords = contaPagar.Count(),
+                iTotalRecords = cont.FirstOrDefault().ToString(),
                 iTotalDisplayRecords = filteredContas.Count(),
                 aaData = result
             }, JsonRequestBehavior.AllowGet);
@@ -150,6 +114,7 @@ namespace UnibenWeb.UI.MVC.Controllers
 
         public ActionResult PagarContaParcelas_DataTableAjaxHandler(JQueryDataTableParamModel param)
         {
+            var id = HttpUtility.ParseQueryString(Request.UrlReferrer.Query)["id"];
             IEnumerable<PagarContaParcelaVm> filteredContas;
             //Check whether the companies should be filtered by keyword
             if (!string.IsNullOrEmpty(param.sSearch))
@@ -164,7 +129,9 @@ namespace UnibenWeb.UI.MVC.Controllers
                 var isCol_02_Searchable = Convert.ToBoolean(Request["bSearchable_2"]);
                 var isCol_03_Searchable = Convert.ToBoolean(Request["bSearchable_3"]);
 
-                filteredContas = _baseAppService.Pesquisar<PagarContaParcelaVm>(0, 999, " contaOrigem_PagarContaId = " + param.iMaterKey, "PagarContaParcelas")
+
+
+                filteredContas = _baseAppService.Pesquisar<PagarContaParcelaVm>(0, 999, " contaOrigem_PagarContaId = " + id, "PagarContaParcelas")
                    .Where(c => isCol_01_Searchable && (Convert.ToString(c.Descricao)).ToLower().Contains(param.sSearch.ToLower())
                                ||
                                isCol_02_Searchable && (Convert.ToString(c.Observacao)).ToLower().Contains(param.sSearch.ToLower())
@@ -184,7 +151,7 @@ namespace UnibenWeb.UI.MVC.Controllers
             }
             else
             {
-                filteredContas = _baseAppService.Pesquisar<PagarContaParcelaVm>(0, 999,  " contaOrigem_PagarContaId = " + param.iMaterKey, "PagarContaParcelas"); ;
+                filteredContas = _baseAppService.Pesquisar<PagarContaParcelaVm>(0, 999, " contaOrigem_PagarContaId = " + id, "PagarContaParcelas"); ;
             }
 
             var isCol_01_Sortable = Convert.ToBoolean(Request["bSortable_1"]);

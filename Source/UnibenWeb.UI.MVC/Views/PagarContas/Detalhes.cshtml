@@ -1,42 +1,62 @@
 ﻿@model IEnumerable<UnibenWeb.Application.ViewModels.PagarContaVm>
+@*model UnibenWeb.Application.ViewModels.PagarContaVm*@
+
 
 @{
     ViewBag.Title = "DetalhesContaParcelamento";
 }
 
 <h2>Detalhes da Conta</h2>
+@*
+    <div>
+        <h4>PessoaVM</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt> @Html.DisplayNameFor(model => model.Descricao)    </dt>
+            <dd> @Html.DisplayFor(model => model.Descricao)    </dd>
+            <dt> @Html.DisplayNameFor(model => model.Observacao)        </dt>
+            <dd> @Html.DisplayFor(model => model.Observacao)        </dd>
+            <dt> @Html.DisplayNameFor(model => model.NumeroParcelas)        </dt>
+            <dd> @Html.DisplayFor(model => model.NumeroParcelas)        </dd>
+            <dt> @Html.DisplayNameFor(model => model.ValorTotal)        </dt>
+            <dd> @Html.DisplayFor(model => model.ValorTotal)        </dd>
+            <dt> @Html.DisplayNameFor(model => model.Status)        </dt>
+            <dd> @Html.DisplayFor(model => model.Status)        </dd>
+        </dl>
+    </div>
+*@
 
 <h2>Parcelas</h2>
 
 <table id="DataTable" class="table">
-    <thead>
+    <thead data-toggle = "tooltip" title="Pressione SHIFT para filtrar mais de uma coluna">
         <tr>
             <th>
-               PagarContaParcelaId
+                PagarContaParcelaId
             </th>
             <th>
-               Descricao
+                Descricao
             </th>
             <th>
-               Observacao
+                Observacao
             </th>
             <th>
-              DataVencimento
+                DataVencimento
             </th>
             <th>
                 DataPagamento
             </th>
             <th>
-               ValorParcela
+                ValorParcela
             </th>
             <th>
-               Juros
+                Juros
             </th>
             <th>
                 Desconto
             </th>
             <th>
-               Status
+                Status
             </th>
             <th>
 
@@ -53,8 +73,7 @@
         $(document)
             .ready(function () {
                 var oTable = $('#DataTable')
-                    .dataTable({
-                        "iMasterKey": 1,
+                    .DataTable({
                         "iDisplayLength": 25,
                         "bSortClasses": false,
                         "bStateSave": false,
@@ -85,7 +104,7 @@
                             { "sName": "Desconto", "targets": 7 },
                             {
                                 "sName": "Status", "targets": 8, //className: 'select-checkbox',
-                                "render": function ( data, type, full, meta ) {
+                                "render": function (data, type, full, meta) {
                                     if (type === 'display') {
                                         if (data == 'true') {
                                             //return "Pago"

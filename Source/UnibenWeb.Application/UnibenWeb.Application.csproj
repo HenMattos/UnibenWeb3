@@ -115,6 +115,7 @@
     <Compile Include="ViewModels\BancoVM.cs" />
     <Compile Include="ViewModels\CentroCustoVm.cs" />
     <Compile Include="ViewModels\CheckListContratoVM.cs" />
+    <Compile Include="ViewModels\ContaPagarComCentroCustoVm.cs" />
     <Compile Include="ViewModels\ContratoVM.cs" />
     <Compile Include="ViewModels\EnderecoVM.cs" />
     <Compile Include="ViewModels\EnumEstadoCivilVM.cs" />

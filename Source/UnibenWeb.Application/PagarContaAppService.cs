@@ -28,7 +28,8 @@ namespace UnibenWeb.Application
             pagarConta.contaParcelas = new List<PagarContaParcela>();
             for (int i = 0; i < pagarConta.NumeroParcelas; i++)
             {
-                var novaParcela = new PagarContaParcela { ValorParcela = (pagarConta.ValorTotal / pagarConta.NumeroParcelas), contaOrigem = pagarConta, DataPagamento = null, DataVencimento = auxVencimentos.AddMonths(1), Desconto = 0, Juros = 0, Descricao = "", Observacao = "", Status = false};
+                auxVencimentos = auxVencimentos.AddMonths(1);
+                var novaParcela = new PagarContaParcela { ValorParcela = (pagarConta.ValorTotal / pagarConta.NumeroParcelas), contaOrigem = pagarConta, DataPagamento = null, DataVencimento = auxVencimentos, Desconto = 0, Juros = 0, Descricao = "", Observacao = "", Status = false};
                 pagarConta.contaParcelas.Add(novaParcela);
             }
             BeginTransaction();

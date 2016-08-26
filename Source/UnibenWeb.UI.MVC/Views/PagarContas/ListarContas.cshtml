@@ -10,28 +10,35 @@
     @Html.ActionLink("Criar Nova Conta", "CriarConta")
 </p>
 <table id="myDataTable" class="table">
-    <thead>
+
+    <thead data-toggle = "tooltip" title="Pressione SHIFT para filtrar mais de uma coluna">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PagarContaId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                Parcelas
-            </th>
-            <th>
-                Observação
-            </th>
-            <th>
-                Tipo de Lançamento
-            </th>
-            <th>
-                Valor Total
-            </th>
+            <th>@Html.DisplayNameFor(model => model.PagarContaId)            </th>
+            <th>@Html.DisplayNameFor(model => model.Descricao)            </th>
+            <th>Centro de Custo            </th>
+            <th>Parcelas            </th>
+            <th>Observação            </th>
+            <th>Tipo de Lançamento            </th>
+            <th>Valor Total            </th>
+            <th>         </th>
         </tr>
     </thead>
+
+    <tbody></tbody>
+
+    <tfoot>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PagarContaId)            </th>
+            <th>@Html.DisplayNameFor(model => model.Descricao)            </th>
+            <th>Centro de Custo            </th>
+            <th>Parcelas            </th>
+            <th>Observação            </th>
+            <th>Tipo de Lançamento            </th>
+            <th>Valor Total            </th>
+            <th>         </th>
+        </tr>
+    </tfoot>
+
 
     @*
         @foreach (var item in Model)
@@ -68,65 +75,105 @@
     <script>
         $(document)
             .ready(function () {
-                var oTable = $('#myDataTable')
-                    .dataTable({
-                        "iDisplayLength": 25,
-                        "bSortClasses": false,
-                        "bStateSave": false,
-                        "bPaginate": true,
-                        "bAutoWidth": false,
-                        "bDestroy": true,
-                        "autoFill": true,
-                        "responsive": true,
-                        "dom": 'Bfrtip',
-                        "buttons": {
-                            buttons: ['copy', 'csv', 'excel']
-                        },
-                        "colReorder": true,
-                        "oLanguage": { "sSearch": "Procurar:", "sProcessing": "Processando" },
-                        "bJQueryUI": false,
-                        "bServerSide": true,
-                        "sAjaxSource": "@Url.Action("AjaxHandler", "PagarContas", routeValues: new {Area = ""})",
-                        "bProcessing": true,
-                        @*
-                        "aoColumns": [
 
-                                                                    {
+                // Setup - add a text input to each footer cell
+                $('#myDataTable tfoot th').each(function () {
+                    var title = $(this).text();
+                    $(this).html('<input type="text" placeholder="Buscar ' + title + '" />');
+                });
+
+                // DataTable
+                var oTable = $('#myDataTable').DataTable({
+                    "iDisplayLength": 25,
+                    "bSortClasses": false,
+                    "bStateSave": false,
+                    "bPaginate": true,
+                    "bAutoWidth": false,
+                    "bDestroy": true,
+                    "autoFill": true,
+                    "responsive": true,
+                    //"dom": 'Bfrtip',
+                    "dom": '<"top">lrft<"bottom"Bip><"clear">',
+                    "buttons": {
+                        buttons: ['copy', 'csv', 'excel']
+                    },
+                    "colReorder": true,
+                    "oLanguage": { "sSearch": "Procurar:", "sProcessing": "Processando" },
+                    "bJQueryUI": false,
+                    "bServerSide": true,
+                    "sAjaxSource": "@Url.Action("AjaxHandler", "PagarContas", routeValues: new {Area = ""})",
+                    "bProcessing": true,
+                    @*
+                        "aoColumns": [{
                                         "sName": "ID",
                                         "bSearchable": false,
                                         "bSortable": false
                                     },
-
-    { "sName": "Descricao" }, { "sName": "Parcelas" }, { "sName": "Observação" }, { "sName": "Tipo de Lançamento" }, { "sName": "Valor Total" }
+                            { "sName": "Descricao" }, { "sName": "Parcelas" }, { "sName": "Observação" }, { "sName": "Tipo de Lançamento" }, { "sName": "Valor Total" }
                         ],
                                                                                             *@
 
-                        "columnDefs": [
-                            { "sName": "PagarContaID", "targets": 0, "bSearchable": false, "bSortable": false, "visible": false },
-                            { "sName": "Descrição", "targets": 1 },
+                    "columnDefs": [
+                        { "sName": "PagarContaID", "targets": 0, "bSearchable": false, "bSortable": false, "visible": false },
+                        { "sName": "tb.Descricao", "targets": 1 },
+                        { "sName": "tb2.Descricao", "targets": 2 },
+                        {
+                            "sName": "NumeroParcelas", "targets": 3,
+                            "render": function (data, type, full, meta) {
+                                var ix = meta.row;
+                                var value = meta.sName;
+                                var rowId = full[0];
+                                var link = '@Url.Action("Detalhes", "PagarContas", routeValues: new { Area = "", id = "_rowid"})';
+                                link = link.replace('_rowid', rowId);
+                                debugger;
+                                //return "Row number is " + ix;
+                                return '<a href="' + link + '">' + '<i class="fa fa-money" data-toggle = "tooltip" title="Detalhar Parcelamento" ></i>' + '</a> \t (' + (data) + ')';
+                            }
+                        },
+                        { "sName": "Observacao", "targets": 4 },
+                        { "sName": "TipoLancamento", "targets": 5 },
+                        { "sName": "ValorTotal", "targets": 6 },
                             {
-                                "sName": "NumeroParcelas", "targets": 2,
+                                "sName": "Operacoes", "targets": 7, "bSearchable": false, "bSortable": false, "width" : 45,
                                 "render": function (data, type, full, meta) {
-                                    var ix = meta.row;
-                                    var value = meta.sName;
-                                    var rowId = full[0];
-                                    var link = '@Url.Action("Detalhes", "PagarContas", routeValues: new { Area = "", id = "_rowid"})';
-                                    link = link.replace('_rowid', rowId);
+                                    var link_detail = '@Url.Action("Detalhes", "PagarContas", routeValues: new { Area = "", id = "_rowid"})';
+                                    link_detail = link_detail.replace('_rowid', full[0]);
+                                    var link_edit = '@Url.Action("Editar", "PagarContas", routeValues: new { Area = "", id = "_rowid"})';
+                                    link_edit = link_edit.replace('_rowid', full[0]);
+                                    var link_delete = '@Url.Action("Excluir", "PagarContas", routeValues: new { Area = "", id = "_rowid"})';
+                                    link_delete = link_delete.replace('_rowid', full[0]);
                                     debugger;
                                     //return "Row number is " + ix;
-                                    return '<a href="' + link + '">' + '<i class="fa fa-money" data-toggle = "tooltip" title="Detalhamento do Parcelamento" ></i>' + '</a> \t (' + (data) + ')';
+                                    return '<a href="' + link_detail + '">' + '<i class="fa fa-binoculars" data-toggle = "tooltip" title="Detalhes" ></i>' + '</a>'
+                                    + ' | <a href="' + link_edit + '">' + '<i class="fa fa-pencil-square-o" data-toggle = "tooltip" title="Editar" ></i>' + '</a>'
+                                    + ' | <a href="' + link_delete + '">' + '<i class="fa fa-trash" data-toggle = "tooltip" title="Excluir" ></i>' + '</a>'
                                 }
-                            },
-                            { "sName": "Observação", "targets": 3 },
-                            { "sName": "Tipo de Lançamento", "targets": 4 },
-                            { "sName": "Valor Total", "targets": 5 }
-                        ]
+                            }
+                    ]
+                });
 
+
+                // Apply the search
+                oTable.columns().every(function () {
+                    debugger;
+                    var that = this;
+                    $('input', this.footer()).on('keyup change', function () {
+                        if (that.search() !== this.value) {
+                            that
+                                .search(this.value)
+                                .draw();
+                        }
                     });
+                });
+
             });
 
-
-
-
     </script>
+    <style>
+        tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    </style>
 }
