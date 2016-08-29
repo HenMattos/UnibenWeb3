@@ -255,6 +255,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\pace.css" />
     <Content Include="Content\DataTables\css\datatables.css" />
     <Content Include="Content\DataTables\images\details_close.png" />
     <Content Include="Content\DataTables\images\details_open.png" />
@@ -453,6 +454,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\Outros\pace.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -535,13 +537,16 @@
     <Content Include="Views\Produtos\Index.cshtml" />
     <Content Include="Views\Operadoras\ListarOperadoras.cshtml" />
     <Content Include="Views\Operadoras\CriarOperadora.cshtml" />
-    <Content Include="Views\PagarContas\ListarContas.cshtml" />
-    <Content Include="Views\PagarContas\CriarConta.cshtml" />
-    <Content Include="Views\PagarContas\Detalhes.cshtml" />
+    <Content Include="Views\PagarContas\Listar.cshtml" />
+    <Content Include="Views\PagarContas\Criar.cshtml" />
+    <Content Include="Views\PagarContas\Detalhar.cshtml" />
+    <Content Include="Views\PagarContaParcelas\Detalhar.cshtml" />
+    <Content Include="Views\PagarContas\_Detalhar.cshtml" />
+    <Content Include="Views\PagarContas\_Editar.cshtml" />
+    <Content Include="Views\PagarContas\_Excluir.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\PagarContaParcelas\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

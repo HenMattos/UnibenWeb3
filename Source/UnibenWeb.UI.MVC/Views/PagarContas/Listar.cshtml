@@ -1,14 +1,20 @@
-﻿@model IEnumerable<UnibenWeb.Application.ViewModels.PagarContaVm>
+﻿
+    @model UnibenWeb.Application.ViewModels.PagarContaVm
 
 @{
     ViewBag.Title = "Index";
 }
 
+<div>
+
+        </div>
+
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Criar Nova Conta", "CriarConta")
+    @Html.ActionLink("Criar Nova Conta", "Criar")
 </p>
+
 <table id="myDataTable" class="table">
 
     <thead data-toggle = "tooltip" title="Pressione SHIFT para filtrar mais de uma coluna">
@@ -66,7 +72,78 @@
         }
     *@
 
+
+
+
 </table>
+
+
+@* ======================= *@
+@* =  MODAL DE DETALHES  = *@
+@* ======================= *@
+
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+            </div>
+            <div class="modal-body">
+                    @Html.Partial("_Detalhar")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* ======================= *@
+@* =   MODAL DE EDIÇÃO   = *@
+@* ======================= *@
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+            </div>
+            <div class="modal-body">
+                    @Html.Partial("_Editar")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* ========================= *@
+@* =   MODAL DE EXCLUSÃO   = *@
+@* ========================= *@
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="exampleModalLabel">Excluir Conta a Pagar</h2>
+            </div>
+            <div class="modal-body">
+                    @Html.Partial("_Excluir")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @Styles.Render("~/bundles/Content/DataTables")
 @Scripts.Render("~/bundles/scripts/DataTables")
@@ -103,16 +180,6 @@
                     "bServerSide": true,
                     "sAjaxSource": "@Url.Action("AjaxHandler", "PagarContas", routeValues: new {Area = ""})",
                     "bProcessing": true,
-                    @*
-                        "aoColumns": [{
-                                        "sName": "ID",
-                                        "bSearchable": false,
-                                        "bSortable": false
-                                    },
-                            { "sName": "Descricao" }, { "sName": "Parcelas" }, { "sName": "Observação" }, { "sName": "Tipo de Lançamento" }, { "sName": "Valor Total" }
-                        ],
-                                                                                            *@
-
                     "columnDefs": [
                         { "sName": "PagarContaID", "targets": 0, "bSearchable": false, "bSortable": false, "visible": false },
                         { "sName": "tb.Descricao", "targets": 1 },
@@ -123,9 +190,8 @@
                                 var ix = meta.row;
                                 var value = meta.sName;
                                 var rowId = full[0];
-                                var link = '@Url.Action("Detalhes", "PagarContas", routeValues: new { Area = "", id = "_rowid"})';
+                                var link = '@Url.Action("Detalhar", "PagarContaParcelas", routeValues: new { Area = "", id = "_rowid"})';
                                 link = link.replace('_rowid', rowId);
-                                debugger;
                                 //return "Row number is " + ix;
                                 return '<a href="' + link + '">' + '<i class="fa fa-money" data-toggle = "tooltip" title="Detalhar Parcelamento" ></i>' + '</a> \t (' + (data) + ')';
                             }
@@ -134,28 +200,64 @@
                         { "sName": "TipoLancamento", "targets": 5 },
                         { "sName": "ValorTotal", "targets": 6 },
                             {
-                                "sName": "Operacoes", "targets": 7, "bSearchable": false, "bSortable": false, "width" : 45,
+                                "sName": "Operacoes", "targets": 7, "bSearchable": false, "bSortable": false, "width": 45,
                                 "render": function (data, type, full, meta) {
+                                    @*
                                     var link_detail = '@Url.Action("Detalhes", "PagarContas", routeValues: new { Area = "", id = "_rowid"})';
                                     link_detail = link_detail.replace('_rowid', full[0]);
                                     var link_edit = '@Url.Action("Editar", "PagarContas", routeValues: new { Area = "", id = "_rowid"})';
                                     link_edit = link_edit.replace('_rowid', full[0]);
                                     var link_delete = '@Url.Action("Excluir", "PagarContas", routeValues: new { Area = "", id = "_rowid"})';
                                     link_delete = link_delete.replace('_rowid', full[0]);
-                                    debugger;
+                                    *@
                                     //return "Row number is " + ix;
-                                    return '<a href="' + link_detail + '">' + '<i class="fa fa-binoculars" data-toggle = "tooltip" title="Detalhes" ></i>' + '</a>'
-                                    + ' | <a href="' + link_edit + '">' + '<i class="fa fa-pencil-square-o" data-toggle = "tooltip" title="Editar" ></i>' + '</a>'
-                                    + ' | <a href="' + link_delete + '">' + '<i class="fa fa-trash" data-toggle = "tooltip" title="Excluir" ></i>' + '</a>'
+                                    return '<a data-toggle="modal" data-target="#detailModal" data-id="' + full[0] + '">' + '<i class="fa fa-binoculars" data-toggle = "tooltip" title="Detalhes" ></i>' + '</a>' // href="' + link_detail + '"
+                                    + ' | <a data-toggle="modal" data-target="#editModal" data-id="' + full[0] + '">' + '<i class="fa fa-pencil-square-o" data-toggle = "tooltip" title="Editar" ></i>' + '</a>'
+                                    + ' | <a data-toggle="modal" data-target="#deleteModal" data-id="' + full[0] + '">' + '<i class="fa fa-trash" data-toggle = "tooltip" title="Excluir" ></i>' + '</a>'
+                                    //return '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailModal" data-whatever="plus">' + '<i class="fa fa-binoculars" data-toggle = "tooltip" title="Detalhes" ></i>' + '</button>'
                                 }
                             }
                     ]
                 });
 
+                $('#detailModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);
+                    var data_id = button.data('id');
+                    var url = '/Administrativo/ContasPagar/Detalhar?id='+data_id;
+                    $.ajax({
+                        url: url,
+                        type: this.method,
+                        //async: true,
+                        data: $(this).serialize(),
+                        success: function (data) {
+                            if (data) {
+                                debugger;
+                                $("#display-descricao").attr('value', 'teste')
+                            }
+                            else {
+                                debugger;
+                                alert("Erro");
+                            }
+                        }});                    
+                })
+
+                $('#editModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);
+                    var data_id = button.data('id');
+                    var form = $('#editForm');
+                    form.attr('action', '/Administrativo/ContasPagar/Excluir?id=' + data_id);
+                })
+
+                $('#deleteModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);
+                    var data_id = button.data('id');
+                    var form = $('#deleteForm');
+                    form.attr('action', '/Administrativo/ContasPagar/Excluir?id=' + data_id);
+                })
+
 
                 // Apply the search
                 oTable.columns().every(function () {
-                    debugger;
                     var that = this;
                     $('input', this.footer()).on('keyup change', function () {
                         if (that.search() !== this.value) {

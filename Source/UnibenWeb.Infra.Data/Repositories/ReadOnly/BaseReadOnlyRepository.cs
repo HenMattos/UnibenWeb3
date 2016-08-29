@@ -20,19 +20,20 @@ namespace UnibenWeb.Infra.Data.Repositories.ReadOnly
                 string sql;
                 if (string.IsNullOrEmpty(pesquisa))
                 {
-                    sql = @"SELECT * FROM {0} tb
-                    ORDER BY 1
-                    OFFSET @pOffset ROWS
-                    FETCH NEXT @pRows ROWS ONLY";
+                    sql = @"SELECT * FROM {0} tb ORDER BY 1";
                     sql = string.Format(sql, tabela);
                 }
                 else
                 {
-                    sql = @"SELECT * FROM {0} tb
-                    WHERE ({1}) ORDER BY 1";
+                    sql = @"SELECT * FROM {0} tb WHERE ({1}) ORDER BY 1";
                     sql = string.Format(sql, tabela, pesquisa);
                 }
-
+                
+                if (numRows > 0)
+                {
+                    sql += " OFFSET @pOffset ROWS FETCH NEXT @pRows ROWS ONLY ";
+                }
+                
                 var result = cn.Query<T>(sql, new { pPesquisa = pesquisa, pOffset = offsetRows, pRows = numRows });
                 return result;
             }

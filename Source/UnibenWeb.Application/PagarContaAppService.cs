@@ -40,5 +40,14 @@ namespace UnibenWeb.Application
             return DomainToApllicationResult(result);
         }
 
+        public void Excluir(bool doLog, string userId, PagarContaVm pagarContaVm)
+        {
+            var pagarConta = Mapper.Map<PagarContaVm, PagarConta>(pagarContaVm);
+            BeginTransaction();
+            _pagarContaService.Excluir(pagarConta);
+            Commit(doLog, userId);
+        }
+
+
     }
 }

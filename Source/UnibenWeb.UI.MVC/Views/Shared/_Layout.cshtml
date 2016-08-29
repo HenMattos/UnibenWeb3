@@ -30,6 +30,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/outros")
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -345,6 +347,16 @@ desired effect
                 lg: 1200
             }
         };
+
+        var paceOptions = {
+            target: '.pace-div',
+  // Disable the 'elements' source
+            elements: false,
+  // Only show the progress on regular and ajax-y page navigation,
+  // not every request
+            restartOnRequestAfter: false
+        }
+
     </script>
 
     @Scripts.Render("~/bundles/admin-lte")

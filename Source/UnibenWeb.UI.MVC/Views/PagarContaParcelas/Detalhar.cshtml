@@ -29,7 +29,7 @@
 <h2>Parcelas</h2>
 
 <table id="DataTable" class="table">
-    <thead data-toggle = "tooltip" title="Pressione SHIFT para filtrar mais de uma coluna">
+    <thead data-toggle="tooltip" title="Pressione SHIFT para filtrar mais de uma coluna">
         <tr>
             <th>
                 PagarContaParcelaId
@@ -91,17 +91,26 @@
                         "oLanguage": { "sSearch": "Procurar:", "sProcessing": "Processando" },
                         "bJQueryUI": false,
                         "bServerSide": true,
-                        "sAjaxSource": "@Url.Action("PagarContaParcelas_DataTableAjaxHandler", "PagarContas", routeValues: new {Area = ""})",
+                        "sAjaxSource": "@Url.Action("PreencheDataTable_AjaxHandle", "PagarContaParcelas", routeValues: new {Area = ""})",
                         "bProcessing": true,
+
+
+                        "fnServerData": function (sSource, aoData, fnCallback) {
+                            debugger;
+                            aoData.push({ "name": "id", "value": @ViewBag.pagarContaId });
+                            $.getJSON(sSource, aoData, function (json) { fnCallback(json) });
+                        },
+
+
                         "columnDefs": [
                             { "sName": "PagarContaParcelaId", "targets": 0, "bSearchable": false, "bSortable": false, "visible": false },
-                            { "sName": "Descrição", "targets": 1 },
-                            { "sName": "Observação", "targets": 2 },
+                            { "sName": "Descricao", "targets": 1 },
+                            { "sName": "Observacao", "targets": 2 },
                             { "sName": "DataVencimento", "targets": 3 },
                             { "sName": "DataPagamento", "targets": 4 },
-                            { "sName": "ValorParcela", "targets": 5 },
+                            { "sName": "Desconto", "targets": 5 },
                             { "sName": "Juros", "targets": 6 },
-                            { "sName": "Desconto", "targets": 7 },
+                            { "sName": "ValorParcela", "targets": 7 },
                             {
                                 "sName": "Status", "targets": 8, //className: 'select-checkbox',
                                 "render": function (data, type, full, meta) {

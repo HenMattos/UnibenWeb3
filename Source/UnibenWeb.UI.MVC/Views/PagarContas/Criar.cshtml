@@ -164,7 +164,7 @@
             // ------
             headers['__RequestVerificationToken'] = token;
             headersadr['__RequestVerificationToken'] = tokenadr;
-            var url = '/Administrativo/ContasPagar/CriarConta';
+            var url = '/Administrativo/ContasPagar/Criar';
             $.ajax({
                 url: url,
                 type: "POST",
@@ -185,7 +185,7 @@
                 success: function (data) {
                     if (data.Resultado > 0) {
                         //ListarEnderecos(data.Resultado);
-                        window.location.href = '/Administrativo/ContasPagar/ListarContas';
+                        window.location.href = '/Administrativo/ContasPagar/Listar';
                     } else {
                         for (var i = 0; i < data.Resultado['Erros'].length; i++) {
                             $('#divValidate').append($('<li>', {

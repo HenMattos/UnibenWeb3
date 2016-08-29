@@ -65,7 +65,7 @@ namespace UnibenWeb.Application
 
         public SelectList ListasDeSelecao<T>(string table, int offsetRows, string join, int numRows, string where, string select, string order, string id, string descricao)
         {
-            var lista = Pesquisar<T>(table, 0, join,  0, where, select, join);
+            var lista = Pesquisar<T>(table, 0, join,  0, where, select, order);
             return new SelectList(lista, id, descricao, join);
         }
 
