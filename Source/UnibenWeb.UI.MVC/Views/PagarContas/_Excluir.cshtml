@@ -20,8 +20,9 @@
         <dd> @Html.DisplayFor(model => model.Status)        </dd>
     </dl>
 
-    @using (Html.BeginForm(null,null, FormMethod.Post, new { id = "deleteForm" })) //"Excluir","PagarContas", new { id = 999 }, FormMethod.Post, new { id = "excluirForm" }
+    @using (Html.BeginForm()) //"Excluir","PagarContas", new { id = 999 }, FormMethod.Post, new { id = "excluirForm" }
     {
+        //"Excluir","PagarContas", FormMethod.Post, new { id = "deleteForm" }
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

@@ -23,6 +23,7 @@ namespace UnibenWeb.Infra.CrossCutting.IoC
             Bind<ICKContratoService>().To<CKContratoService>();
             Bind<IBaseService>().To<BaseService>();
             Bind<IPagarContaService>().To<PagarContaService>();
+            Bind<ICentroCustoService>().To<CentroCustoService>();
 
             // Infra.Data
             Bind(typeof(IBaseRepository<>)).To(typeof(BaseRepository<>));
@@ -31,6 +32,7 @@ namespace UnibenWeb.Infra.CrossCutting.IoC
             Bind<IBancoRepository>().To<BancoRepository>();
             Bind<IEstadoCivilRepository>().To<EstadoCivilRepository>();
             Bind<IPagarContaRepository>().To<PagarContaRepository>();
+            Bind<ICentroCustoRepository>().To<CentroCustoRepository>();
 
             // Infra.Data ReadOnly
             Bind<IPessoaReadOnlyRepository>().To<PessoaReadOnlyRepository>();

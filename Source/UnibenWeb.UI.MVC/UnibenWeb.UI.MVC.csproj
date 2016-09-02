@@ -256,7 +256,8 @@
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\pace.css" />
-    <Content Include="Content\DataTables\css\datatables.css" />
+    <Content Include="Content\css\select2.css" />
+    <Content Include="Content\DataTables\css\datatables_old.css" />
     <Content Include="Content\DataTables\images\details_close.png" />
     <Content Include="Content\DataTables\images\details_open.png" />
     <Content Include="Content\DataTables\images\sort_asc.png" />
@@ -364,7 +365,7 @@
     <Content Include="Scripts\DataTables\DataTables-1.10.12\js\dataTables.jqueryui.min.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.12\js\jquery.dataTables.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.12\js\jquery.dataTables.min.js" />
-    <Content Include="Scripts\DataTables\datatables.css" />
+    <Content Include="Content\css\datatables.css" />
     <Content Include="Scripts\DataTables\datatables.js" />
     <Content Include="Scripts\DataTables\FixedColumns-3.2.2\css\fixedColumns.bootstrap.css" />
     <Content Include="Scripts\DataTables\FixedColumns-3.2.2\css\fixedColumns.bootstrap.min.css" />
@@ -454,8 +455,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\npm.js" />
-    <Content Include="Scripts\Outros\pace.js" />
+    <Content Include="Scripts\pace.js" />
     <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -544,6 +546,7 @@
     <Content Include="Views\PagarContas\_Detalhar.cshtml" />
     <Content Include="Views\PagarContas\_Editar.cshtml" />
     <Content Include="Views\PagarContas\_Excluir.cshtml" />
+    <Content Include="Views\PagarContas\teste.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

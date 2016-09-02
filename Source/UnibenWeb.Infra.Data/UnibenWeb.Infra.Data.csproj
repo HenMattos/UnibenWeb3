@@ -75,6 +75,7 @@
     <Compile Include="EntityConfig\AcomodacaoTipoEFConfig.cs" />
     <Compile Include="EntityConfig\BancoEFConfig.cs" />
     <Compile Include="EntityConfig\CentroCustoEfConfig.cs" />
+    <Compile Include="EntityConfig\ContaContabilEfConfig.cs" />
     <Compile Include="EntityConfig\ContratoEFConfig.cs" />
     <Compile Include="EntityConfig\EnderecoEFConfig.cs" />
     <Compile Include="EntityConfig\EstadoCivilEFConfig.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BancoRepository.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
+    <Compile Include="Repositories\CentroCustoRepository.cs" />
     <Compile Include="Repositories\EnderecoRepository.cs" />
     <Compile Include="Repositories\EstadoCivilRepository.cs" />
     <Compile Include="Repositories\PagarContaParcelaRepository.cs" />

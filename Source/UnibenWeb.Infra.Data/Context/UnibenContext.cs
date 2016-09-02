@@ -31,6 +31,7 @@ namespace UnibenWeb.Infra.Data.Context
         public DbSet<PagarConta> PagarContas { get; set; }
         public DbSet<PagarContaParcela> PagarContaParcelas { get; set; }
         public DbSet<CentroCusto> CentroCustos { get; set; }
+        public DbSet<ContaContabil> ContaContabeis { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -66,6 +67,7 @@ namespace UnibenWeb.Infra.Data.Context
             modelBuilder.Configurations.Add(new PagarContaEfConfig());
             modelBuilder.Configurations.Add(new CentroCustoEfConfig());
             modelBuilder.Configurations.Add(new PagarContaParcelaEfConfig());
+            modelBuilder.Configurations.Add(new ContaContabilEfConfig());
             // ~~~
 
             base.OnModelCreating(modelBuilder);

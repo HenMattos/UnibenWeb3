@@ -1,5 +1,5 @@
 ﻿
-    @model UnibenWeb.Application.ViewModels.PagarContaVm
+@model UnibenWeb.Application.ViewModels.PagarContaVm
 
 @{
     ViewBag.Title = "Index";
@@ -7,7 +7,7 @@
 
 <div>
 
-        </div>
+</div>
 
 <h2>Index</h2>
 
@@ -17,7 +17,7 @@
 
 <table id="myDataTable" class="table">
 
-    <thead data-toggle = "tooltip" title="Pressione SHIFT para filtrar mais de uma coluna">
+    <thead data-toggle="tooltip" title="Pressione SHIFT para filtrar mais de uma coluna">
         <tr>
             <th>@Html.DisplayNameFor(model => model.PagarContaId)            </th>
             <th>@Html.DisplayNameFor(model => model.Descricao)            </th>
@@ -87,10 +87,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                <h4 class="modal-title" id="exampleModalLabel">Destalhar Conta a Pagar</h4>
             </div>
-            <div class="modal-body">
-                    @Html.Partial("_Detalhar")
+            <div class="modal-body" id='detailModalContent'>
+                @*Html.Partial("_Detalhar")*@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -109,10 +109,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                <h4 class="modal-title" id="exampleModalLabel">Editar Conta a Pagar</h4>
             </div>
-            <div class="modal-body">
-                    @Html.Partial("_Editar")
+            <div class="modal-body" id='editModalContent'>
+                @*Html.Partial("_Editar")*@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -133,8 +133,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h2 class="modal-title" id="exampleModalLabel">Excluir Conta a Pagar</h2>
             </div>
-            <div class="modal-body">
-                    @Html.Partial("_Excluir")
+            <div class="modal-body" id='deleteModalContent'>
+                @*Html.Partial("_Excluir")*@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -148,11 +148,32 @@
 @Styles.Render("~/bundles/Content/DataTables")
 @Scripts.Render("~/bundles/scripts/DataTables")
 
+
 @section scripts {
+    <script data-pace-options='{"startOnPageLoad": false }' src="~/Scripts/pace.js"></script>
+
+    @*
+            <script data-pace-options='{ "elements": { "selectors": [".selector"] }, "startOnPageLoad": false }' src="~/Scripts/Outros/pace.js"></script>
+        @Scripts.Render("~/bundles/outros")
+                var paceOptions = {
+            target: '.pace-div',
+            // Disable the 'elements' source
+            elements: {
+                selectors: ['.my-page']
+            },
+            // Only show the progress on regular and ajax-y page navigation,
+            // not every request
+            restartOnRequestAfter: false,
+            startOnPageLoad: false
+        }
+
+        $(document).ready(function () {
+           // $(".pace").hide();
+        });
+    *@
     <script>
         $(document)
             .ready(function () {
-
                 // Setup - add a text input to each footer cell
                 $('#myDataTable tfoot th').each(function () {
                     var title = $(this).text();
@@ -182,8 +203,8 @@
                     "bProcessing": true,
                     "columnDefs": [
                         { "sName": "PagarContaID", "targets": 0, "bSearchable": false, "bSortable": false, "visible": false },
-                        { "sName": "tb.Descricao", "targets": 1 },
-                        { "sName": "tb2.Descricao", "targets": 2 },
+                        { "sName": "Descricao", "targets": 1 },
+                        { "sName": "CentrosCustoDescricao", "targets": 2 },
                         {
                             "sName": "NumeroParcelas", "targets": 3,
                             "render": function (data, type, full, meta) {
@@ -221,40 +242,82 @@
                 });
 
                 $('#detailModal').on('show.bs.modal', function (event) {
+                    Pace.restart();
                     var button = $(event.relatedTarget);
                     var data_id = button.data('id');
-                    var url = '/Administrativo/ContasPagar/Detalhar?id='+data_id;
+                    var url = '/Administrativo/ContasPagar/Detalhar?id=' + data_id;
                     $.ajax({
                         url: url,
                         type: this.method,
-                        //async: true,
                         data: $(this).serialize(),
                         success: function (data) {
                             if (data) {
                                 debugger;
-                                $("#display-descricao").attr('value', 'teste')
+                                $(data).appendTo('#detailModal .modal-body');
                             }
                             else {
                                 debugger;
                                 alert("Erro");
                             }
-                        }});                    
-                })
+                        }
+                    });
+                });
 
                 $('#editModal').on('show.bs.modal', function (event) {
+                    Pace.restart();
                     var button = $(event.relatedTarget);
                     var data_id = button.data('id');
-                    var form = $('#editForm');
-                    form.attr('action', '/Administrativo/ContasPagar/Excluir?id=' + data_id);
-                })
+                    var url = '/Administrativo/ContasPagar/Editar?id=' + data_id;
+                    $.ajax({
+                        url: url,
+                        type: this.method,
+                        data: $(this).serialize(),
+                        success: function (data) {
+                            if (data) {
+                                debugger;
+                                $(data).appendTo('#editModal .modal-body');
+                            }
+                            else {
+                                debugger;
+                                alert("Erro");
+                            }
+                        }
+                    });
+                });
 
                 $('#deleteModal').on('show.bs.modal', function (event) {
+                    Pace.restart();
                     var button = $(event.relatedTarget);
                     var data_id = button.data('id');
-                    var form = $('#deleteForm');
-                    form.attr('action', '/Administrativo/ContasPagar/Excluir?id=' + data_id);
-                })
+                    var url = '/Administrativo/ContasPagar/Excluir?id=' + data_id;
+                    $.ajax({
+                        url: url,
+                        type: this.method,
+                        data: $(this).serialize(),
+                        success: function (data) {
+                            if (data) {
+                                debugger;
+                                $(data).appendTo('#deleteModal .modal-body');
+                                }
+                            else {
+                                debugger;
+                                alert("Erro");
+                            }
+                        }
+                    });
+                });
 
+                $('#detailModal').on('hide.bs.modal', function (event) {
+                    $('#detailModal .modal-body').replaceWith('<div class="modal-body" id="detailModalContent"></div>');
+                });
+
+                $('#editModal').on('hide.bs.modal', function (event) {
+                    $('#editModal .modal-body').replaceWith('<div class="modal-body" id="editModalContent"></div>');
+                });
+
+                $('#deleteModal').on('hide.bs.modal', function (event) {
+                    $('#deleteModal .modal-body').replaceWith('<div class="modal-body" id="deleteModalContent"></div>');
+                });
 
                 // Apply the search
                 oTable.columns().every(function () {
@@ -267,7 +330,6 @@
                         }
                     });
                 });
-
             });
 
     </script>

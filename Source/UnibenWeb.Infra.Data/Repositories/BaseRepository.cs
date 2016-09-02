@@ -55,6 +55,12 @@ namespace UnibenWeb.Infra.Data.Repositories
             return DbSet.Where(predicate);
         }
 
+        public virtual void AttachObject(TEntity obj)
+        {
+            var entry = Context.Entry(obj);
+            DbSet.Attach(obj);
+        }
+
         public virtual void SaveChanges()
         {
             Context.SaveChanges();

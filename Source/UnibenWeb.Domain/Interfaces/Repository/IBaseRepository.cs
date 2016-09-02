@@ -20,6 +20,7 @@ namespace UnibenWeb.Domain.Interfaces.Repository
         void Update(TEntity obj);
         void Remove(TEntity obj);
         IEnumerable<TEntity> SearchWhere(Expression<Func<TEntity, bool>> predicate);
+        void AttachObject(TEntity obj);
         void SaveChanges();
 
     }

@@ -61,7 +61,7 @@ namespace UnibenWeb.UI.MVC.Controllers
 
 
 
-                filteredContas = _baseAppService.Pesquisar<PagarContaParcelaVm>(0, 999, " contaOrigem_PagarContaId = " + id, "PagarContaParcelas")
+                filteredContas = _baseAppService.Pesquisar<PagarContaParcelaVm>(0, 999, " contaOrigemId = " + id, "PagarContaParcelas")
                    .Where(c => isCol_01_Searchable && (Convert.ToString(c.Descricao)).ToLower().Contains(param.sSearch.ToLower())
                                ||
                                isCol_02_Searchable && (Convert.ToString(c.Observacao)).ToLower().Contains(param.sSearch.ToLower())
@@ -81,7 +81,7 @@ namespace UnibenWeb.UI.MVC.Controllers
             }
             else
             {
-                filteredContas = _baseAppService.Pesquisar<PagarContaParcelaVm>(0, 999, " contaOrigem_PagarContaId = " + id, "PagarContaParcelas"); ;
+                filteredContas = _baseAppService.Pesquisar<PagarContaParcelaVm>(0, 999, " contaOrigemId = " + id, "PagarContaParcelas"); ;
             }
 
             var isCol_01_Sortable = Convert.ToBoolean(Request["bSortable_1"]);

@@ -28,6 +28,7 @@ namespace UnibenWeb.Application.AutoMapper
             CreateMap<EstadoCivil, EstadoCivilVM>();
             CreateMap<OperadoraVm, Pessoa>();
             CreateMap<PagarContaVm, PagarConta>();
+            CreateMap<CentroCustoVm, CentroCusto>();
             // Para utilizar quando os campos do mapeamento nao batem:
             // .ForMember(dest => dest.Enderecos, pt => pt.MapFrom(src => src.EnderecoList));
         }

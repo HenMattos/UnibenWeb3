@@ -19,8 +19,8 @@ namespace UnibenWeb.Domain.Entities
 
         [Key]
         public int PagarContaId{ get; set; }
-        public int FornecedorId { get; set; }
-        public int CentroCustoId { get; set; } // comercial, impostos, diretoria, cobrança, RH
+        public int? FornecedorId { get; set; }
+        //public int CentroCustoId { get; set; } // comercial, impostos, diretoria, cobrança, RH
         public int LocalPagamentoId { get; set; } // uniben parksul, uniben jdiniz
         public string Descricao { get; set; }
         public string Observacao { get; set; }
@@ -34,8 +34,8 @@ namespace UnibenWeb.Domain.Entities
         // Atributo de Navegaçãcao Entre Objetos |
         // ======================================|
         public virtual Pessoa Fornecedor { get; set; }
-        public virtual CentroCusto CentroCusto { get; set; }
-        public virtual ICollection<PagarContaParcela> contaParcelas { get; set; }
+        public virtual ICollection<CentroCusto> CentrosCusto { get; set; }
+        public virtual ICollection<PagarContaParcela> ContaParcelas { get; set; }
 
 
         // ===========================================|

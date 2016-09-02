@@ -125,6 +125,7 @@ namespace UnibenWeb.UI.MVC.Models
             if (order == "") { order = "1"; };
             results.Add(order);
             return results;
+
             //var dynExp = System.Linq.Dynamic.DynamicExpression.ParseLambda(new[] { linqParam }, null, exp);
             //var obj = new { };
             //Convert.ChangeType(obj, typeof(T)); precisar implementar iconvertible

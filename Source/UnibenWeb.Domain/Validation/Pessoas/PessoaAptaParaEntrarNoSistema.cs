@@ -16,7 +16,6 @@ namespace UnibenWeb.Domain.Validation.Pessoas
             var pessoaDuplicada = new PessoaJaCadastrada(_pessoaRepository);
             base.AdicionarRegra("PessoaDuplicada",
                 new Regra<Pessoa>(pessoaDuplicada, "Já existe o mesmo CPF cadastrado no sistema!"));
-
         }
     }
 }

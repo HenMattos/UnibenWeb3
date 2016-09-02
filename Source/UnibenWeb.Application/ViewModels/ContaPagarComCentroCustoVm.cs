@@ -12,7 +12,7 @@ namespace UnibenWeb.Application.ViewModels
     {
         [Key]
         public int PagarContaId { get; set; }
-        public int FornecedorId { get; set; } // FK - Pessoa Id
+        public int? FornecedorId { get; set; } // FK - Pessoa Id
         public int CentroCustoId { get; set; } // FK - CentroCustoId -- comercial, impostos, diretoria, cobrança, RH
         public int LocalPagamentoId { get; set; } // FK - LocalPagamentoId -- uniben parksul, uniben jdiniz
         [DataType(DataType.MultilineText)]
@@ -29,10 +29,14 @@ namespace UnibenWeb.Application.ViewModels
         public decimal ValorTotal { get; set; }
         public bool Status { get; set; }
 
+        public string CentrosCustoDescricao { get; set; }
+
         // Centro de Custo
         //public int CentroCustoId { get; set; }
-        public string CentroCustoDescricao { get; set; }
+        //public string CentroCustoDescricao { get; set; }
         //public string ObservacaoCentroCusto { get; set; }
+
+        //public ICollection<CentroCustoVm> CentrosCusto { get; set; }
 
     }
 }

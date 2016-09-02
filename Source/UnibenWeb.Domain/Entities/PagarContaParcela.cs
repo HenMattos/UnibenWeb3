@@ -25,11 +25,13 @@ namespace UnibenWeb.Domain.Entities
         public decimal Desconto { get; set; }
         public bool Status { get; set; } // Pago?
 
+        public int ContaOrigemId { get; set; }
+
         // ======================================|
         // Atributo de Navegaçãcao Entre Objetos |
         // ======================================|
 
-        public virtual PagarConta contaOrigem { get; set; }
+        public virtual PagarConta ContaOrigem { get; set; }
 
         // ===========================================|
         // Validação Dos Dados do Objeto Dessa Classe |
