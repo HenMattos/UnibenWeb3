@@ -82,6 +82,8 @@
     <Compile Include="Entities\SegmentoAssistencial.cs" />
     <Compile Include="Entities\TipoContratacaoProduto.cs" />
     <Compile Include="Entities\PessoaTipo.cs" />
+    <Compile Include="Entities\TipoLancamento.cs" />
+    <Compile Include="Entities\UnidadeNegocio.cs" />
     <Compile Include="Interfaces\Repository\IBancoRepository.cs" />
     <Compile Include="Interfaces\Repository\ICentroCustoRepository.cs" />
     <Compile Include="Interfaces\Repository\IComunicacaoPessoaRepository.cs" />
@@ -147,6 +149,7 @@
     <Compile Include="Validation\Pessoas\PessoaAptaParaEntrarNoSistema.cs" />
     <Compile Include="Validation\Pessoas\PessoaEstaAptaParaEntrarNoSistema.cs" />
     <Compile Include="Validation\Regra.cs" />
+    <Compile Include="Validation\TipoLancamentos\TipoLancamentoFiscalizarRegras.cs" />
     <Compile Include="ValueObjects\EnderecosPessoa.cs" />
     <Compile Include="ValueObjects\ValidationError.cs" />
     <Compile Include="ValueObjects\ValidationResult.cs" />

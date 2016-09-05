@@ -17,6 +17,7 @@ namespace UnibenWeb.Domain.Entities
         {
                 
         }
+
         [Key]
         public int ContaContabilId { get; set; }
         public int? ContaContabilPaiId { get; set; }

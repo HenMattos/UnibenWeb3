@@ -13,8 +13,7 @@ namespace UnibenWeb.Domain.Entities
     {
         public Banco()
         {
-            Pessoas = new List<Pessoa>();
-
+            //Pessoas = new List<Pessoa>();
         }
         [Key]
         public int BancoId { get; set; }
@@ -25,6 +24,6 @@ namespace UnibenWeb.Domain.Entities
         public string Email { get; set; }
         public string Obs { get; set; }
 
-        public virtual ICollection<Pessoa> Pessoas { get; set; }
+        //public virtual ICollection<Pessoa> Pessoas { get; set; }
     }
 }

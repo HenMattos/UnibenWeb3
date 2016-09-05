@@ -9,6 +9,7 @@ namespace UnibenWeb.Infra.Data.EntityConfig
         {
             ToTable("Pessoas");
             HasKey(p => p.PessoaId);
+            Ignore(c => c.ResultadoValidacao);
 
             Property(p => p.Nome)
                 .HasMaxLength(150)
@@ -23,7 +24,7 @@ namespace UnibenWeb.Infra.Data.EntityConfig
             Property(p => p.NacionalidadeId).IsOptional();
             Property(p => p.NaturalidadeId).IsOptional();
 
-            Ignore(c => c.ResultadoValidacao);
+
 
             // Relacionamento (1) para (1) 
             // HasRequired(p => p.EstadoCivil)
@@ -42,7 +43,7 @@ namespace UnibenWeb.Infra.Data.EntityConfig
             //http://stackoverflow.com/questions/18719890/one-to-zero-or-one-with-hasforeignkey
 
             // Exclusivos
-            HasRequired(s => s.Banco).WithMany(s => s.Pessoas).HasForeignKey(s => s.BancoId);
+            HasRequired(s => s.Banco).WithMany().HasForeignKey(s => s.BancoId);
             HasRequired(s => s.PessoaTipo).WithMany(s => s.Pessoas).HasForeignKey(s => s.PessoaTipoId);
             //HasRequired(p => p.Banco).WithOptional().Map(p => p.MapKey("BancoId"));
             //HasRequired(p => p.PessoaTipo).WithOptional().Map(p => p.MapKey("PessoaTipoId"));

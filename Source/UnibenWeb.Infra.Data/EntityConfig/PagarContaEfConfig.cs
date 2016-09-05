@@ -25,11 +25,12 @@ namespace UnibenWeb.Infra.Data.EntityConfig
                     me.ToTable("ContaPagarCentroCusto");          // Cria tabela de suporte para relacionamento
                 });
                 
-
             // Relacionamento de Pessoa (1) para PagarConta (0..1) em FornecedorId
             //HasRequired(s => s.Fornecedor).WithOptional().Map(x => x.MapKey("FornecedorId"));
-            HasOptional(s => s.Fornecedor).WithMany().HasForeignKey(x=>x.FornecedorId);
 
+            HasOptional(s => s.Fornecedor).WithMany().HasForeignKey(x=>x.FornecedorId);
+            HasRequired(s => s.TipoLancamento).WithMany().HasForeignKey(x => x.TipoLancamentoId);
+            HasRequired(s => s.ContaContabil).WithMany().HasForeignKey(x => x.ContaContabilId);
 
             // Relacionamento (N) Enderecos (1) Pessoa 
             HasMany(x => x.ContaParcelas)

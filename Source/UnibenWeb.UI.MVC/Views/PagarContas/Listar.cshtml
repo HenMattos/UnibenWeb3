@@ -145,8 +145,9 @@
 </div>
 
 
-@Styles.Render("~/bundles/Content/DataTables")
-@Scripts.Render("~/bundles/scripts/DataTables")
+
+@Scripts.Render("~/js/datatables")
+@Styles.Render("~/css/datatables")
 
 
 @section scripts {
@@ -177,7 +178,7 @@
                 // Setup - add a text input to each footer cell
                 $('#myDataTable tfoot th').each(function () {
                     var title = $(this).text();
-                    $(this).html('<input type="text" placeholder="Buscar ' + title + '" />');
+                    $(this).html('<input type="text" class=".input-sm" placeholder="' + title + '" data-toggle = "tooltip" title="Buscar em ' + title + '" />');
                 });
 
                 // DataTable

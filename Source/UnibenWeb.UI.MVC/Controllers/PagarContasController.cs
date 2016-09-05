@@ -28,7 +28,7 @@ namespace UnibenWeb.UI.MVC.Controllers
         // GET: PagarContas
         public ActionResult Listar()
         {
-            return View(_baseAppService.Pesquisar<PagarContaVm>(0, 999, "", "PagarContas").FirstOrDefault());
+            return View(_baseAppService.Pesquisar<PagarContaVm>(0, 0, "", "PagarContas").FirstOrDefault());
 
         }
 
@@ -41,12 +41,7 @@ namespace UnibenWeb.UI.MVC.Controllers
 
         public ActionResult Criar()
         {
-            //ViewBag.Pessoas = _baseAppService.ListasDeSelecao<PessoaVM>("PessoaId", "Nome", "Pessoas", " Descricao = 'Fornecedor' ", " join [dbo].[PessoaTipos] tb2 on tb2.PessoaTipoId = tb.PessoaTipoId ", " tb.* ");
-            var defaultListItem = new SelectListItem { Text = "Selecione...", Value = "False" };
             ViewBag.Pessoas = _baseAppService.ListasDeSelecao<PessoaVM>("Pessoas", 0, " join [dbo].[PessoaTipos] tb2 on tb2.PessoaTipoId = tb.PessoaTipoId ", 0, "TipoDescricao = 'Fornecedor'", " tb.*, tb2.Descricao as TipoDescricao ", "Nome", "PessoaId", "Nome");
-
-           // ((SelectList)ViewBag.Pessoas).
-
             ViewBag.CentroCustos = _baseAppService.ListasDeSelecao<CentroCustoVm>("CentroCustoId", "Descricao", "CentroCustos", "");
             return View();
         }
@@ -111,7 +106,9 @@ namespace UnibenWeb.UI.MVC.Controllers
 
         public ActionResult Editar(int id)
         {
-            var pagarContaVm = (_baseAppService.Pesquisar<PagarContaVm>(0, 0, " PagarContaId = " + Convert.ToString(id), "PagarContas"));
+            ViewBag.Pessoas = _baseAppService.ListasDeSelecao<PessoaVM>("Pessoas", 0, " join [dbo].[PessoaTipos] tb2 on tb2.PessoaTipoId = tb.PessoaTipoId ", 0, "TipoDescricao = 'Fornecedor'", " tb.*, tb2.Descricao as TipoDescricao ", "Nome", "PessoaId", "Nome");
+            ViewBag.CentroCustos = _baseAppService.ListasDeSelecao<CentroCustoVm>("CentroCustoId", "Descricao", "CentroCustos", "");
+            var pagarContaVm = (_baseAppService.Pesquisar<PagarContaVm>(0, 0, " PagarContaId = " + Convert.ToString(id), "PagarContas")).FirstOrDefault();
             return PartialView("_Editar", pagarContaVm);
         }
 

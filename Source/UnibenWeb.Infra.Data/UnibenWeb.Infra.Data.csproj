@@ -90,6 +90,7 @@
     <Compile Include="EntityConfig\PropostaEFConfig.cs" />
     <Compile Include="EntityConfig\SegmentoAssistencialEFConfig.cs" />
     <Compile Include="EntityConfig\TelContatoEFConfig.cs" />
+    <Compile Include="EntityConfig\TipoLancamentoEfConfig.cs" />
     <Compile Include="Interfaces\IContextManager.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Migrations\Configuration.cs" />
