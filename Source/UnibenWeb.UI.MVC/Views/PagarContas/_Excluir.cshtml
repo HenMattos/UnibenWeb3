@@ -1,0 +1,32 @@
+﻿@model UnibenWeb.Application.ViewModels.PagarContaVm
+
+@{
+    ViewBag.Title = "Excluir";
+}
+<h4>Tem Certeza que deseja excluir esta conta? </h4>
+<h5>Todos os valores referentes aos parcelamentos também serão excluídos.</h5>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt> @Html.DisplayNameFor(model => model.Descricao)    </dt>
+        <dd> @Html.DisplayFor(model => model.Descricao)    </dd>
+        <dt> @Html.DisplayNameFor(model => model.Observacao)        </dt>
+        <dd> @Html.DisplayFor(model => model.Observacao)        </dd>
+        <dt> @Html.DisplayNameFor(model => model.NumeroParcelas)        </dt>
+        <dd> @Html.DisplayFor(model => model.NumeroParcelas)        </dd>
+        <dt> @Html.DisplayNameFor(model => model.ValorTotal)        </dt>
+        <dd> @Html.DisplayFor(model => model.ValorTotal)        </dd>
+        <dt> @Html.DisplayNameFor(model => model.Status)        </dt>
+        <dd> @Html.DisplayFor(model => model.Status)        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) //"Excluir","PagarContas", new { id = 999 }, FormMethod.Post, new { id = "excluirForm" }
+    {
+        //"Excluir","PagarContas", FormMethod.Post, new { id = "deleteForm" }
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Excluir" class="btn btn-default" /> |
+        </div>
+    }
+</div>

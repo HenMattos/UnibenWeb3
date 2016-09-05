@@ -4,48 +4,107 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Beneficiarios</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CPF_CNPJ)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DataNascimento)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ativo)
-        </th>
-        <th></th>
-    </tr>
+@*
+    ACCORDION CADASTRAR
+*@
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse1"> @* data-parent="#accordion"*@
+                    Cadastrar
+                </a>
+            </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse">
+            <div class="panel-body">
+                <p>
+                    @Html.ActionLink("Create New", "Create")
+                </p>
+            </div>
+        </div>
+    </div>
+    @*
+        ACCORDION PROCURAR
+    *@
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse2"> @* data-parent="#accordion"*@
+                    Procurar
+                </a>
+            </h4>
+        </div>
+        <div id="collapse2" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CPF_CNPJ)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DataNascimento)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Ativo)
+                        </th>
+                        <th></th>
+                    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CPF_CNPJ)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataNascimento)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ativo)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PessoaId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PessoaId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PessoaId })
-        </td>
-    </tr>
-}
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CPF_CNPJ)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DataNascimento)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ativo)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.PessoaId }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.PessoaId }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.PessoaId })
+                            </td>
+                        </tr>
+                    }
 
-</table>
+                </table>
+            </div>
+        </div>
+    </div>
+    @*
+        ACCORDION DETALHES / PESSOA
+    *@
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse3"> @* data-parent="#accordion"*@
+                    Detalhes
+                </a>
+            </h4>
+        </div>
+        <div id="collapse3" class="panel-collapse collapse">
+            <div class="panel-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                commodo consequat.
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+
+

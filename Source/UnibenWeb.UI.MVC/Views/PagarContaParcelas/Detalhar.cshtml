@@ -1,0 +1,155 @@
+﻿@model IEnumerable<UnibenWeb.Application.ViewModels.PagarContaVm>
+@*model UnibenWeb.Application.ViewModels.PagarContaVm*@
+
+
+@{
+    ViewBag.Title = "DetalhesContaParcelamento";
+}
+
+<h2>Detalhes da Conta</h2>
+@*
+    <div>
+        <h4>PessoaVM</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt> @Html.DisplayNameFor(model => model.Descricao)    </dt>
+            <dd> @Html.DisplayFor(model => model.Descricao)    </dd>
+            <dt> @Html.DisplayNameFor(model => model.Observacao)        </dt>
+            <dd> @Html.DisplayFor(model => model.Observacao)        </dd>
+            <dt> @Html.DisplayNameFor(model => model.NumeroParcelas)        </dt>
+            <dd> @Html.DisplayFor(model => model.NumeroParcelas)        </dd>
+            <dt> @Html.DisplayNameFor(model => model.ValorTotal)        </dt>
+            <dd> @Html.DisplayFor(model => model.ValorTotal)        </dd>
+            <dt> @Html.DisplayNameFor(model => model.Status)        </dt>
+            <dd> @Html.DisplayFor(model => model.Status)        </dd>
+        </dl>
+    </div>
+*@
+
+<h2>Parcelas</h2>
+
+<table id="DataTable" class="table">
+    <thead data-toggle="tooltip" title="Pressione SHIFT para filtrar mais de uma coluna">
+        <tr>
+            <th>
+                PagarContaParcelaId
+            </th>
+            <th>
+                Descricao
+            </th>
+            <th>
+                Observacao
+            </th>
+            <th>
+                DataVencimento
+            </th>
+            <th>
+                DataPagamento
+            </th>
+            <th>
+                ValorParcela
+            </th>
+            <th>
+                Juros
+            </th>
+            <th>
+                Desconto
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+</table>
+
+@Styles.Render("~/bundles/Content/DataTables")
+@Scripts.Render("~/bundles/scripts/DataTables")
+
+@section scripts {
+    <script>
+        $(document)
+            .ready(function () {
+                var oTable = $('#DataTable')
+                    .DataTable({
+                        "iDisplayLength": 25,
+                        "bSortClasses": false,
+                        "bStateSave": false,
+                        "bPaginate": true,
+                        "bAutoWidth": false,
+                        "bDestroy": true,
+                        "autoFill": true,
+                        "responsive": true,
+                        //"dom": 'Bfrtip',
+                        "dom": '<"top">lrft<"bottom"Bip><"clear">',
+                        "buttons": {
+                            buttons: ['copy', 'csv', 'excel']
+                        },
+                        "colReorder": true,
+                        "oLanguage": { "sSearch": "Procurar:", "sProcessing": "Processando" },
+                        "bJQueryUI": false,
+                        "bServerSide": true,
+                        "sAjaxSource": "@Url.Action("PreencheDataTable_AjaxHandle", "PagarContaParcelas", routeValues: new {Area = ""})",
+                        "bProcessing": true,
+
+
+                        "fnServerData": function (sSource, aoData, fnCallback) {
+                            debugger;
+                            aoData.push({ "name": "id", "value": @ViewBag.pagarContaId });
+                            $.getJSON(sSource, aoData, function (json) { fnCallback(json) });
+                        },
+
+
+                        "columnDefs": [
+                            { "sName": "PagarContaParcelaId", "targets": 0, "bSearchable": false, "bSortable": false, "visible": false },
+                            { "sName": "Descricao", "targets": 1 },
+                            { "sName": "Observacao", "targets": 2 },
+                            { "sName": "DataVencimento", "targets": 3 },
+                            { "sName": "DataPagamento", "targets": 4 },
+                            { "sName": "Desconto", "targets": 5 },
+                            { "sName": "Juros", "targets": 6 },
+                            { "sName": "ValorParcela", "targets": 7 },
+                            {
+                                "sName": "Status", "targets": 8, //className: 'select-checkbox',
+                                "render": function (data, type, full, meta) {
+                                    if (type === 'display') {
+                                        if (data == 'true') {
+                                            //return "Pago"
+                                            return '<input type="checkbox" class="editor-active" value="1" disabled="disabled" checked="checked"> Pago';
+                                        } else {
+                                            //return "Em Aberto"
+                                            return '<input type="checkbox" class="editor-active" value="0" disabled="disabled"> Em Aberto';
+                                        }
+                                        //return '<input type="checkbox" class="editor-active">';
+                                    }
+                                    return data;
+                                },
+                            },
+                            {
+                                "sName": "NumeroParcelas", "targets": 9, "bSearchable": false, "bSortable": false,
+                                "render": function (data, type, full, meta) {
+                                    var link_detail = '@Url.Action("Detalhes", "PagarContaParcelas", routeValues: new { Area = "", id = "_rowid"})';
+                                    link_detail = link_detail.replace('_rowid', full[0]);
+                                    var link_edit = '@Url.Action("Editar", "PagarContaParcelas", routeValues: new { Area = "", id = "_rowid"})';
+                                    link_edit = link_edit.replace('_rowid', full[0]);
+                                    var link_delete = '@Url.Action("Excluir", "PagarContaParcelas", routeValues: new { Area = "", id = "_rowid"})';
+                                    link_delete = link_delete.replace('_rowid', full[0]);
+                                    debugger;
+                                    //return "Row number is " + ix;
+                                    return '<a href="' + link_detail + '">' + '<i class="fa fa-binoculars" data-toggle = "tooltip" title="Detalhes" ></i>' + '</a>'
+                                    + ' | <a href="' + link_edit + '">' + '<i class="fa fa-pencil-square-o" data-toggle = "tooltip" title="Editar" ></i>' + '</a>'
+                                    + ' | <a href="' + link_delete + '">' + '<i class="fa fa-trash" data-toggle = "tooltip" title="Excluir" ></i>' + '</a>'
+                                }
+                            }
+                        ],
+                        select: {
+                            style: 'os',
+                            selector: 'td:last-child', //
+                            blurable: true
+                        }
+                    });
+            });
+    </script>
+}

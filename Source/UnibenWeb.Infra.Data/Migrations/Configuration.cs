@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using UnibenWeb.Domain.Entities;
 
@@ -40,6 +41,28 @@ namespace UnibenWeb.Infra.Data.Migrations
                 , new PessoaTipo() { Descricao = "Instituição", Obs = "Instituição" }
                 , new PessoaTipo() { Descricao = "Fornecedor", Obs = "Fornecedores da Uniben" }
                 );
+
+            context.SaveChanges();
+
+            var objBanco = context.Bancos.Find(1);
+            var objPessoaTipo = context.PessoaTipos.Find(11);
+
+            var objPessoa = new Pessoa()
+            {
+                Agencia = "32",
+                Ativo = true,
+                BancoId = 1,
+                Banco = objBanco,
+                CartaoSUS = "14",
+                ContaCorrente = "1546789",
+                CPF_CNPJ = "14155096000101",
+                DataNascimento = new DateTime(1957, 05, 30),
+                Enderecos = new List<Endereco>() { },
+                PessoaTipoId = 11,
+                PessoaTipo = objPessoaTipo,
+                Nome = "Fornecedor Teste"
+            };
+            context.Pessoas.AddOrUpdate(x => x.PessoaId, objPessoa);
 
             context.SegmentoAssistenciais.AddOrUpdate(x => x.SegmentoAssistencialId
                 , new SegmentoAssistencial() { Descricao = "Ambulatorial/Coparticipação/Regional com limitador em reais por procedimento.", Obs = "" }
@@ -107,6 +130,10 @@ namespace UnibenWeb.Infra.Data.Migrations
                 , new CentroCusto() { Descricao = "Uniodonto Juiz de Fora", Obs = "" }
                 );
 
+            var obj1 = new ContaContabil() { Descricao = "Pessoa", ContaContabilPaiId = null };
+            context.ContaContabeis.AddOrUpdate(x => x.ContaContabilId, obj1);
+            context.ContaContabeis.AddOrUpdate(x => x.ContaContabilId, new ContaContabil() { Descricao = "Pessoa Salário", ContaContabilPai = obj1 });
+            context.ContaContabeis.AddOrUpdate(x => x.ContaContabilId, new ContaContabil() { Descricao = "Pessoa Transporte", ContaContabilPai = obj1 });
 
         }
     }

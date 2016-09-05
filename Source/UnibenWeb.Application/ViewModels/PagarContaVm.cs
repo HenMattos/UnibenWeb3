@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,8 +14,8 @@ namespace UnibenWeb.Application.ViewModels
 
         [Key]
         public int PagarContaId { get; set; }
-        public int FornecedorId { get; set; } // FK - Pessoa Id
-        public int CentroCustoId { get; set; } // FK - CentroCustoId -- comercial, impostos, diretoria, cobrança, RH
+        public int? FornecedorId { get; set; } // FK - Pessoa Id
+        public IEnumerable<int> CentroCustoId { get; set; } // FK - CentroCustoId -- comercial, impostos, diretoria, cobrança, RH
         public int LocalPagamentoId { get; set; } // FK - LocalPagamentoId -- uniben parksul, uniben jdiniz
         [DataType(DataType.MultilineText)]
         public string Descricao { get; set; }

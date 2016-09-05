@@ -52,9 +52,9 @@ namespace UnibenWeb.Application
            return _baseService.Pesquisar<T>(offsetRows, numRows, pesquisa, tabela);
         }
 
-        public IEnumerable<T> Pesquisar<T>(int offsetRows, int numRows, string pesquisa, string tabela, string join)
+        public IEnumerable<T> Pesquisar<T>(string table, int offsetRows, string join, int numRows, string where, string select, string order)
         {
-            return _baseService.Pesquisar<T>(offsetRows, numRows, pesquisa, tabela, join);
+            return _baseService.Pesquisar<T>(table, offsetRows, join, numRows, where, select, order);
         }
 
         public SelectList ListasDeSelecao<T>(string id, string descricao, string tabela, string pesquisa)
@@ -63,9 +63,9 @@ namespace UnibenWeb.Application
             return new SelectList(lista, id, descricao);
         }
 
-        public SelectList ListasDeSelecao<T>(string id, string descricao, string tabela, string pesquisa, string join)
+        public SelectList ListasDeSelecao<T>(string table, int offsetRows, string join, int numRows, string where, string select, string order, string id, string descricao)
         {
-            var lista = Pesquisar<T>(0, 999, pesquisa, tabela, join);
+            var lista = Pesquisar<T>(table, 0, join,  0, where, select, order);
             return new SelectList(lista, id, descricao, join);
         }
 

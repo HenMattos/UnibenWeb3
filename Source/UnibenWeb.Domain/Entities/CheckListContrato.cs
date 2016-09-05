@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UnibenWeb.Domain.Entities
@@ -12,8 +13,12 @@ namespace UnibenWeb.Domain.Entities
         }
         [Key]
         public int CheckListContratoId { get; set; }
-        public string CheckItem { get; set; }
+        public string Obs { get; set; }
         public bool Checked { get; set; }
+        public int UsuarioId { get; set; }
+
+        //public virtual CheckList CheckItem { get; set; }
+
 
     }
 }

@@ -87,9 +87,34 @@ namespace UnibenWeb.Infra.CrossCutting.Audit.Context
                     ent.Property("RecordID").CurrentValue = targetObj.CurrentValues.GetValue<object>(keyName).ToString();
                 }
             }
-            return base.SaveChanges();
-                //throw new InvalidOperationException("User ID é Obrigatório!");
+            try
+            {
+                return base.SaveChanges();
             }
+            catch (System.Data.Entity.Validation.DbEntityValidationException e)
+            {
+                var outputLines = new List<string>();
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    outputLines.Add(string.Format(
+                        "{0}: Entity of type \"{1}\" in state \"{2}\" has the following validation errors:",
+                        DateTime.Now, eve.Entry.Entity.GetType().Name, eve.Entry.State));
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        outputLines.Add(string.Format(
+                            "- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage));
+                    }
+                }
+                //Write to file
+                System.IO.File.AppendAllLines(@"c:\temp\errors.txt", outputLines);
+                throw;
+
+                // Showing it on screen
+                throw new Exception(string.Join(",", outputLines.ToArray()));
+            }
+            //throw new InvalidOperationException("User ID é Obrigatório!");
+        }
 
         private static IEnumerable<Entities.Audit> GetAuditRecordsForChange(DbEntityEntry dbEntry, string userId)
         {

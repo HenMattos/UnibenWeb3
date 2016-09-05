@@ -1,0 +1,237 @@
+﻿@model UnibenWeb.Application.ViewModels.PagarContaVm
+
+@Html.AntiForgeryToken()
+
+@*Html.HiddenFor(model => model.PessoaTipoId);*@
+
+@*Html.LabelFor(model => model.DataEmissao, htmlAttributes: new { @class = "control-label col-md-2" })*@
+
+<div class="col-md-12">
+    <div class="input-group-btn">
+        <button type="button" class="btn">@Html.ActionLink("<<< Voltar para listagem ", "Listar")</button>
+    </div>
+</div>
+
+@Html.HiddenFor(model => model.PagarContaId)
+
+<div class="input-group col-md-6">
+    @Html.Label("Centros de Custo", new { @class = "control-label col-md-3" })
+    @Html.DropDownListFor(d => d.CentroCustoId, (IEnumerable<SelectListItem>)ViewBag.CentroCustos,
+    new { @class = "form-control col-md-9 select2", @multiple = "multiple", @data_placeholder = "Selecione...", @style = "width: 100%;" })
+</div>
+
+<div class="input-group col-md-6">
+    @Html.Label("Fornecedores", new { @class = "control-label col-md-3" })
+    <div class="col-md-9">
+        @Html.DropDownListFor(d => d.FornecedorId, (IEnumerable<SelectListItem>)ViewBag.Pessoas, "", new { @class = "form-control", @data_placeholder = "Selecione..." })
+    </div>
+</div>
+
+
+<div class="col-md-10">
+    @Html.EditorFor(model => model.DataEmissao, new
+{
+    htmlAttributes = new
+    {
+        @class = "form-control",
+        placeholder = Html.DisplayNameFor(m => m.DataEmissao),
+        Title = "Data de Emissão",
+        data_toggle = "tooltip",
+        data_placement = "top",
+        max = "2016-12-31"
+    }
+})
+    @Html.ValidationMessageFor(model => model.DataEmissao, "", new { @class = "text-danger" })
+</div>
+
+
+@*@Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })*@
+<div class="col-md-10">
+    @Html.EditorFor(model => model.Descricao, new
+{
+    htmlAttributes = new
+    {
+        @class = "form-control",
+        placeholder = Html.DisplayNameFor(m => m.Descricao),
+        Title = "Descrição",
+        data_toggle = "tooltip",
+        data_placement = "top"
+    }
+})
+    @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+</div>
+
+
+@*@Html.LabelFor(model => model.NumeroParcelas, htmlAttributes: new { @class = "control-label col-md-2" })*@
+<div class="col-md-10">
+    @Html.EditorFor(model => model.NumeroParcelas, new
+{
+    htmlAttributes = new
+    {
+        @class = "form-control",
+        placeholder = Html.DisplayNameFor(m => m.NumeroParcelas),
+        Title = "Numero de Parcelas",
+        data_toggle = "tooltip",
+        data_placement = "top"
+    }
+})
+    @Html.ValidationMessageFor(model => model.NumeroParcelas, "", new { @class = "text-danger" })
+</div>
+
+
+@*@Html.LabelFor(model => model.Obs, htmlAttributes: new { @class = "control-label col-md-2" })*@
+<div class="col-md-10">
+    @Html.EditorFor(model => model.Observacao, new
+{
+    htmlAttributes = new
+    {
+        @class = "form-control",
+        placeholder = Html.DisplayNameFor(m => m.Observacao),
+        Title = "Observação",
+        data_toggle = "tooltip",
+        data_placement = "top"
+    }
+})
+    @Html.ValidationMessageFor(model => model.Observacao, "", new { @class = "text-danger" })
+</div>
+
+
+@*@Html.LabelFor(model => model.TipoConta, htmlAttributes: new { @class = "control-label col-md-2" })*@
+<div class="col-md-10">
+    @Html.EditorFor(model => model.TipoLancamento, new
+{
+    htmlAttributes = new
+    {
+        @class = "form-control",
+        placeholder = Html.DisplayNameFor(m => m.TipoLancamento),
+        Title = "Tipo de Conta",
+        data_toggle = "tooltip",
+        data_placement = "top"
+    }
+})
+    @Html.ValidationMessageFor(model => model.TipoLancamento, "", new { @class = "text-danger" })
+</div>
+
+
+@* @Html.LabelFor(model => model.ValorTotal, htmlAttributes: new { @class = "control-label col-md-2" })*@
+<div class="col-md-10">
+    @Html.EditorFor(model => model.ValorTotal, new
+{
+    htmlAttributes = new
+    {
+        @class = "form-control",
+        placeholder = Html.DisplayNameFor(m => m.ValorTotal),
+        Title = "Valor Total",
+        data_toggle = "tooltip",
+        data_placement = "top"
+    }
+})
+    @Html.ValidationMessageFor(model => model.ValorTotal, "", new { @class = "text-danger" })
+</div>
+
+<div class="col-md-12">
+    <a href="#" class="btn btn-default" onclick="SalvarConta();"> Criar Conta </a>
+</div>
+</div>
+
+
+@Styles.Render("~/bundles/Content/DataTables")
+@Scripts.Render("~/bundles/scripts/DataTables")
+
+@*.Render("~/bundles/select2")*@
+@Scripts.Render("~/bundles/select2")
+
+@section Scripts {
+    @*
+             <!-- cdn for modernizr, if you haven't included it already -->
+            <script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+            <!-- polyfiller file to detect and load polyfills -->
+            <script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet" />
+
+
+    <script>
+        function SalvarConta() {
+            debugger;
+            var dataemissao = $("#DataEmissao").val();
+            var descricao = $("#Descricao").val();
+            var numeroparcelas = $("#NumeroParcelas").val();
+            var observacao = $("#Observacao").val();
+            var tipoConta = $("#TipoConta").val();
+            var valortotal = $("#ValorTotal").val();
+            var centrocustoid = $("#CentroCustoId").val();
+            var fornecedorid = $("#FornecedorId").val();
+
+            // ------
+            var token = $('input[name="__RequestVerificationToken"]').val();
+            var tokenadr = $('form[action="/Pessoa/Create"] input [name="__RequestVerificationToken"]').val();
+            var headers = {};
+            var headersadr = {};
+            // ------
+
+            headers['__RequestVerificationToken'] = token;
+            headersadr['__RequestVerificationToken'] = tokenadr;
+            var url = '/Administrativo/ContasPagar/Criar';
+            $.ajax({
+                url: url,
+                type: "POST",
+                datatype: "json",
+                headers: headersadr,
+                data: {
+                    Id: 0,
+                    DataEmissao: dataemissao,
+                    Descricao: descricao,
+                    NumeroParcelas: numeroparcelas,
+                    Observacao: observacao,
+                    TipoConta: tipoConta,
+                    ValorTotal: valortotal,
+                    CentroCustoId: centrocustoid,
+                    FornecedorId: fornecedorid,
+                    __RequestVerificationToken: token
+                },
+                success: function (data) {
+                    if (data.Resultado > 0) {
+                        //ListarEnderecos(data.Resultado);
+                        window.location.href = '/Administrativo/ContasPagar/Listar';
+                    } else {
+                        for (var i = 0; i < data.Resultado['Erros'].length; i++) {
+                            $('#divValidate').append($('<li>', {
+                                text: data.Resultado['Erros'][i].Message
+                            }));
+                            $('#divValidate').show();
+                        }
+                    }
+                },
+                error: function (json) {
+                    $('#divValidate').empty();
+                    for (var i = 0; i < json['responseJSON'].length; i++) {
+                        $('#divValidate').append($('<li>', {
+                            text: json['responseJSON'][i].errors[0]
+                        }));
+                        $('#divValidate').show();
+                    }
+                }
+            })
+        }
+
+
+
+        $(function () {
+            //Initialize Select2 Elements
+            debugger;
+            $(".select2").select2();
+
+        });
+        /*
+        webshims.setOptions('waitReady', false);
+        webshims.setOptions('forms-ext', {types: 'date'});
+        webshims.polyfill('forms forms-ext');
+        */
+    </script>
+}

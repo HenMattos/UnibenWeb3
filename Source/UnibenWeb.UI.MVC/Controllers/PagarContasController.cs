@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using UnibenWeb.Application.Interface;
 using UnibenWeb.Application.ViewModels;
@@ -11,7 +13,7 @@ using UnibenWeb.UI.MVC.Models;
 namespace UnibenWeb.UI.MVC.Controllers
 {
     [RoutePrefix("Administrativo/ContasPagar")]
-    [Route("{action=ListarContas}")]
+    [Route("{action=Listar}")]
     public class PagarContasController : Controller
     {
         private readonly IBaseAppService _baseAppService;
@@ -24,15 +26,22 @@ namespace UnibenWeb.UI.MVC.Controllers
         }
 
         // GET: PagarContas
-        public ActionResult ListarContas()
+        public ActionResult Listar()
         {
-            return View(_baseAppService.Pesquisar<PagarContaVm>(0,999,"","PagarContas"));
+            return View(_baseAppService.Pesquisar<PagarContaVm>(0, 0, "", "PagarContas").FirstOrDefault());
+
         }
 
-
-        public ActionResult CriarConta()
+        // GET: PagarContas
+        public ActionResult Teste()
         {
-            ViewBag.Pessoas = _baseAppService.ListasDeSelecao<PessoaVM>("PessoaId", "Nome", "Pessoas", " Descricao = 'Fornecedor' ", " join [dbo].[PessoaTipos] tb2 on tb2.PessoaTipoId = tb.PessoaTipoId ");
+            return View();
+
+        }
+
+        public ActionResult Criar()
+        {
+            ViewBag.Pessoas = _baseAppService.ListasDeSelecao<PessoaVM>("Pessoas", 0, " join [dbo].[PessoaTipos] tb2 on tb2.PessoaTipoId = tb.PessoaTipoId ", 0, "TipoDescricao = 'Fornecedor'", " tb.*, tb2.Descricao as TipoDescricao ", "Nome", "PessoaId", "Nome");
             ViewBag.CentroCustos = _baseAppService.ListasDeSelecao<CentroCustoVm>("CentroCustoId", "Descricao", "CentroCustos", "");
             return View();
         }
@@ -40,84 +49,128 @@ namespace UnibenWeb.UI.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateAjax]
-        public ActionResult CriarConta(PagarContaVm pagarContaVm)
+        public ActionResult Criar(PagarContaVm pagarContaVm)
         {
             if (ModelState.IsValid)
             {
                 var result = _pagarContaAppService.Adicionar(true, User.Identity.GetUserId(), pagarContaVm);
                 if (!result.IsValid)
                 {
-                        foreach (var validationAppError in result.Erros)
-                        {
-                            ModelState.AddModelError(string.Empty, validationAppError.Message);
-                        }
+                    foreach (var validationAppError in result.Erros)
+                    {
+                        ModelState.AddModelError(string.Empty, validationAppError.Message);
+                    }
 
-                        return Json(new { Resultado = result });                     
+                    return Json(new { Resultado = result });
                 }
                 return Json(new { Resultado = pagarContaVm.PagarContaId }, JsonRequestBehavior.AllowGet);
+                //return RedirectToAction("index");
             }
             else
             {
-                
+                return Json(new { Validar = true });
             }
-            return Json(new { Validar = true });
+
+            //return View("ListaContas");
         }
+
+        public ActionResult Detalhar(int id)
+        {
+            var pagarConta = _baseAppService.Pesquisar<PagarContaVm>(0, 0, " PagarContaId = " + Convert.ToString(id), "PagarContas").FirstOrDefault();
+            //return Json(new { PagarContaDetalhes = pagarConta }, JsonRequestBehavior.AllowGet);
+            //return PartialViewResult("_Detalhar", pagarConta);
+            //return View(_baseAppService.Pesquisar<PagarContaVm>(0, 0, " PagarContaId = " + Convert.ToString(id), "PagarContas"));
+
+
+            if (true /*There is no error in your model*/)
+            {
+                //YourModelType model = new YourModelType();
+
+
+                // initialize an instance of YourModelType
+                // using ...args...
+                //pagarConta.ItemOption.Active = ...;
+                //pagarConta.ItemOption.ItemOptionCode = ...;
+                //pagarConta.ItemOption.Name = ...;
+
+                return PartialView("_Detalhar", pagarConta);
+            }
+            else
+            {
+                // You can choose whatever http status code makes sense
+                // e.g 301, 400 etc..
+                //return HttpStatusCodeResult(400, "An error occurred");
+                return PartialView("_Detalhar", pagarConta);
+            }
+        }
+
+        public ActionResult Editar(int id)
+        {
+            ViewBag.Pessoas = _baseAppService.ListasDeSelecao<PessoaVM>("Pessoas", 0, " join [dbo].[PessoaTipos] tb2 on tb2.PessoaTipoId = tb.PessoaTipoId ", 0, "TipoDescricao = 'Fornecedor'", " tb.*, tb2.Descricao as TipoDescricao ", "Nome", "PessoaId", "Nome");
+            ViewBag.CentroCustos = _baseAppService.ListasDeSelecao<CentroCustoVm>("CentroCustoId", "Descricao", "CentroCustos", "");
+            var pagarContaVm = (_baseAppService.Pesquisar<PagarContaVm>(0, 0, " PagarContaId = " + Convert.ToString(id), "PagarContas")).FirstOrDefault();
+            return PartialView("_Editar", pagarContaVm);
+        }
+
+        public ActionResult Excluir(int id)
+        {
+            var pagarContaVm = (_baseAppService.Pesquisar<PagarContaVm>(0, 0, " PagarContaId = " + Convert.ToString(id), "PagarContas").FirstOrDefault());
+            return PartialView("_Excluir", pagarContaVm);
+        }
+
+        [HttpPost, ActionName("Excluir")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ExcluirConfirmado(int id)
+        {
+            var pagarContaVm = _baseAppService.Pesquisar<PagarContaVm>(0, 0, " PagarContaId = " + Convert.ToString(id), "PagarContas").FirstOrDefault();
+            _pagarContaAppService.Excluir(true, User.Identity.GetUserId(), pagarContaVm);
+            return RedirectToAction("Listar");
+        }
+
 
         public ActionResult AjaxHandler(JQueryDataTableParamModel param)
         {
-            //var pessoas = _pessoaAppService.BuscaTodos(0, 50);
-            var contaPagarParcelas = _baseAppService.Pesquisar<PagarContaParcelaVm>(0, 999, "", "PagarContaParcelas");
-            IEnumerable<PagarContaParcelaVm> filteredCompanies;
+            var cont = _baseAppService.Pesquisar<int>("PagarContas", 0, "", 0, "", " count(*) as NumRegistros ", "1");
+            IEnumerable<ContaPagarComCentroCustoVm> filteredContas;
             //Check whether the companies should be filtered by keyword
-            if (!string.IsNullOrEmpty(param.sSearch))
-            {
-                //Used if particulare columns are filtered 
-                var nameFilter = Convert.ToString(Request["sSearch_1"]);
-                var addressFilter = Convert.ToString(Request["sSearch_2"]);
-                var townFilter = Convert.ToString(Request["sSearch_3"]);
+            var calculatedParams = param.GetCalculatedParams<ContaPagarComCentroCustoVm>(Request.QueryString);
 
-                //Optionally check whether the columns are searchable at all 
-                var isNameSearchable = Convert.ToBoolean(Request["bSearchable_1"]);
-                var isAddressSearchable = Convert.ToBoolean(Request["bSearchable_2"]);
-                var isTownSearchable = Convert.ToBoolean(Request["bSearchable_3"]);
+            var auxSelect = ", (COALESCE((SELECT CAST(tb3.Descricao AS VARCHAR(55)) + ', ' AS[text()] FROM[CentroCustos] AS tb3 "
+                + " join [dbo].[ContaPagarCentroCusto] tb2 on tb3.CentroCustoId = tb2.CentroCustoId"
+         + " where tb2.ContaPagarId = tb.PagarContaId ORDER BY tb3.CentroCustoId"
+         + " FOR XML PATH(''), TYPE).value('.[1]', 'VARCHAR(8000)'), '')) as CentrosCustoDescricao";
+            
+            filteredContas = _baseAppService.Pesquisar<ContaPagarComCentroCustoVm>(
+                "PagarContas",
+                param.iDisplayStart,
+                "", //" join [dbo].[ContaPagarCentroCusto] tb2 on tb2.ContaPagarId = tb.PagarContaId join [dbo].[CentroCustos] tb3 on tb3.CentroCustoId = tb2.CentroCustoId ",
+                param.iDisplayLength,
+                calculatedParams.ToArray()[0] + calculatedParams.ToArray()[1],
+                " tb.* " + auxSelect, // , tb3.Descricao as CentrosCustoDescricao
+                calculatedParams.ToArray()[2]);
 
-                filteredCompanies = _baseAppService.Pesquisar<PagarContaParcelaVm>(0, 999, "", "PagarContaParcelas")
-                   .Where(c => isNameSearchable && c.PagarContaParcelaId.ToString().ToLower().Contains(param.sSearch.ToLower())
-                               ||
-                               isAddressSearchable && c.ValorParcela.ToString().ToLower().Contains(param.sSearch.ToLower())
-                               ||
-                               isTownSearchable && c.DataVencimento.ToString().ToLower().Contains(param.sSearch.ToLower()));
-            }
-            else
-            {
-                filteredCompanies = contaPagarParcelas;
-            }
 
-            var isNameSortable = Convert.ToBoolean(Request["bSortable_1"]);
-            var isAddressSortable = Convert.ToBoolean(Request["bSortable_2"]);
-            var isTownSortable = Convert.ToBoolean(Request["bSortable_3"]);
-            var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
-            Func<PagarContaParcelaVm, string> orderingFunction = (c => sortColumnIndex == 1 && isNameSortable ? c.PagarContaParcelaId.ToString() :
-                                                           sortColumnIndex == 2 && isAddressSortable ? c.ValorParcela.ToString() :
-                                                           sortColumnIndex == 3 && isTownSortable ? c.DataVencimento.ToString() :
-                                                           "");
+            //var commaDelimitedListOfCentrosCusto = string.Join(",", (IList<int>)pagarContaVm.CentroCustoId).ToString();
 
-            var sortDirection = Request["sSortDir_0"];
-            if (sortDirection == "asc")
-                filteredCompanies = filteredCompanies.OrderBy(orderingFunction);
-            else
-                filteredCompanies = filteredCompanies.OrderByDescending(orderingFunction);
+            var result = from c in filteredContas // displayedContas 
+                         select new[] {
+                Convert.ToString(c.PagarContaId),
+                Convert.ToString(c.Descricao),
+                Convert.ToString(c.CentrosCustoDescricao),
+                Convert.ToString(c.NumeroParcelas),
+                Convert.ToString(c.Observacao),
+                Convert.ToString(c.TipoLancamento),
+                Convert.ToString(c.ValorTotal)};
 
-            var displayedCompanies = filteredCompanies.Skip(param.iDisplayStart).Take(param.iDisplayLength);
-            var result = from c in displayedCompanies select new[] { Convert.ToString(c.PagarContaParcelaId), c.PagarContaParcelaId.ToString(), c.ValorParcela.ToString(), c.DataVencimento.ToString()};
             return Json(new
             {
                 sEcho = param.sEcho,
-                iTotalRecords = contaPagarParcelas.Count(),
-                iTotalDisplayRecords = filteredCompanies.Count(),
+                iTotalRecords = cont.FirstOrDefault().ToString(),
+                iTotalDisplayRecords = filteredContas.Count(),
                 aaData = result
             }, JsonRequestBehavior.AllowGet);
         }
+
 
 
     }

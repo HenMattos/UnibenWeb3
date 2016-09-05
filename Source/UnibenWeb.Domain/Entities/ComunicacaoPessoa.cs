@@ -17,8 +17,17 @@ namespace UnibenWeb.Domain.Entities
         }
         [Key]
         public int ComunicacaoPessoaId { get; set; }
-        public string Descricacao { get; set; }
-        public string MotivoContato { get; set; }
         public int PessoaId { get; set; }
+        public string Descricacao { get; set; }
+        public string Obs { get; set; }
+        public DateTime DataRegistro { get; set; }
+        public int UsuarioRegistroId { get; set; }
+        public DateTime DataSolucao { get; set; }
+        public int UsuarioSolucaoId { get; set; }
+
+        // public virtual ComunicacaoSolucao ComunicacaoSolucao { get; set; }
+        // public virtual MotivoContato MotivoContato { get; set; }
+
+
     }
 }

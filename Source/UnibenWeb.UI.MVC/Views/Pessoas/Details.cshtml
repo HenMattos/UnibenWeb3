@@ -1,7 +1,7 @@
 ﻿@model UnibenWeb.Application.ViewModels.PessoaVM
 
 @{
-   ViewBag.Title = "Details";
+    ViewBag.Title = "Details";
 }
 @Styles.Render("~/bundles/Content/DataTables")
 @Scripts.Render("~/bundles/scripts/DataTables")
@@ -10,40 +10,16 @@
 
 <div>
     <h4>PessoaVM</h4>
-    <hr/>
+    <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CPF_CNPJ)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CPF_CNPJ)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DataNascimento)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DataNascimento)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Ativo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Ativo)
-        </dd>
-
+        <dt> @Html.DisplayNameFor(model => model.Nome)        </dt>
+        <dd> @Html.DisplayFor(model => model.Nome)        </dd>
+        <dt> @Html.DisplayNameFor(model => model.CPF_CNPJ)        </dt>
+        <dd> @Html.DisplayFor(model => model.CPF_CNPJ)        </dd>
+        <dt> @Html.DisplayNameFor(model => model.DataNascimento)        </dt>
+        <dd> @Html.DisplayFor(model => model.DataNascimento)        </dd>
+        <dt> @Html.DisplayNameFor(model => model.Ativo)        </dt>
+        <dd> @Html.DisplayFor(model => model.Ativo)        </dd>
     </dl>
 </div>
 
@@ -61,7 +37,7 @@
                 <th>Company name</th>
                 <th>Address</th>
                 <th>Town</th>
-                <th>Test</th>
+                <th>Funções</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -74,7 +50,7 @@
 
     <script>
         $(document)
-            .ready(function() {
+            .ready(function () {
                 /*
                 $("li")
                     .click(function() {
@@ -154,6 +130,7 @@
                         "autoFill": true,
                         "responsive": true,
                         "colReorder": true,
+                        "dom": 'Bfrtip',
                         "buttons": {
                             buttons: ['copy', 'csv', 'excel']
                         },
@@ -170,21 +147,18 @@
                             { "sName": "COMPANY_NAME" },
                             { "sName": "ADDRESS" },
                             { "sName": "TOWN" },
-                            {
-                                "mData": "teste",
-                                "mRender ": function(data, type, val) {
-                                    switch (type) {
-                                    case 'display':
-                                        return '<a href="/data/' + data.foo + '">' + data.bar + '</a>';
-                                        break;
-                                    // optionally, add case statements for 'sort', 'filter', and 'type'
-                                    default:
-                                        return data.bar;
-                                        break;
-                                    }
-                                }
+                        ],
+
+                        "columnDefs": [{
+                            "targets": 4,
+                            "data": "download_link",
+                            "render": function (data, type, full, meta) {
+                                var ix = meta.row;
+                                //return "Row number is " + ix;
+                                return '<a href="' + data + '"><i class="fa fa-gears" data-toggle = "tooltip" title="Opções" ></i></a>';
                             }
-                        ]
+                        }]
+
                     });
             });
     </script>

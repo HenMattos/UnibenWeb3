@@ -47,5 +47,10 @@ namespace UnibenWeb.Domain.Services
         {
             throw new NotImplementedException();
         }
+
+        public void Excluir(PagarConta pagarConta)
+        {
+            _pagarContaRepository.Remove(pagarConta);
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Infrastructure;
 using XmlSerializer = System.Xml.Serialization.XmlSerializer;
 using Newtonsoft.Json;
-
+using UnibenWeb.Infra.CrossCutting.Audit.JsonConfig;
 
 namespace UnibenWeb.Infra.CrossCutting.Audit.Entities
 {
@@ -78,13 +78,16 @@ namespace UnibenWeb.Infra.CrossCutting.Audit.Entities
             var jsonSerializer = new JsonSerializer
             {
                 MissingMemberHandling = MissingMemberHandling.Ignore,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.None
             };
+
+            jsonSerializer.ContractResolver = new CustomResolver();
 
             var sb = new StringBuilder();
             using (var sw = new StringWriter(sb))
             using (var jtw = new JsonTextWriter(sw))
-                jsonSerializer.Serialize(jtw, obj);
+            jsonSerializer.Serialize(jtw, obj);
 
             return sb.ToString();
         }

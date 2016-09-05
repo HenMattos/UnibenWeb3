@@ -93,11 +93,13 @@
     <Compile Include="AutoMapper\VMToDomainMappingProfile.cs" />
     <Compile Include="BancoAppService.cs" />
     <Compile Include="BaseAppService.cs" />
+    <Compile Include="CentroCustoAppService.cs" />
     <Compile Include="CKContratoAppService.cs" />
     <Compile Include="EnderecoAppService.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="EstadoCivilAppService.cs" />
     <Compile Include="Interface\IBaseAppService.cs" />
+    <Compile Include="Interface\ICentroCustoAppService.cs" />
     <Compile Include="Interface\ICKContratoAppService.cs" />
     <Compile Include="Interface\IBancoAppService.cs" />
     <Compile Include="Interface\IEnderecoAppService.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="ViewModels\BancoVM.cs" />
     <Compile Include="ViewModels\CentroCustoVm.cs" />
     <Compile Include="ViewModels\CheckListContratoVM.cs" />
+    <Compile Include="ViewModels\ContaPagarComCentroCustoVm.cs" />
     <Compile Include="ViewModels\ContratoVM.cs" />
     <Compile Include="ViewModels\EnderecoVM.cs" />
     <Compile Include="ViewModels\EnumEstadoCivilVM.cs" />

@@ -27,6 +27,7 @@ namespace UnibenWeb.Application.AutoMapper
             CreateMap<EstadoCivilVM, EstadoCivil>();
             CreateMap<Pessoa,OperadoraVm > ();
             CreateMap<PagarConta, PagarContaVm>();
+            CreateMap<CentroCusto, CentroCustoVm>();
         }
 
     }
