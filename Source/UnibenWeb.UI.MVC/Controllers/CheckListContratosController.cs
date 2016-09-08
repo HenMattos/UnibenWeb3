@@ -14,9 +14,9 @@ namespace UnibenWeb.UI.MVC.Controllers
 {
     public class CheckListContratosController : Controller
     {
-        private readonly ICKContratoAppService _ckContratoAppService;
+        private readonly ICheckListContratoAppService _ckContratoAppService;
 
-        public CheckListContratosController(ICKContratoAppService ckContratoAppService)
+        public CheckListContratosController(ICheckListContratoAppService ckContratoAppService)
         {
             _ckContratoAppService = ckContratoAppService;
         }

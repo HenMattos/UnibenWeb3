@@ -31,9 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Dapper">
       <HintPath>..\..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -75,6 +74,7 @@
     <Compile Include="EntityConfig\AcomodacaoTipoEFConfig.cs" />
     <Compile Include="EntityConfig\BancoEFConfig.cs" />
     <Compile Include="EntityConfig\CentroCustoEfConfig.cs" />
+    <Compile Include="EntityConfig\CheckListContratoEfConfig.cs" />
     <Compile Include="EntityConfig\ContaContabilEfConfig.cs" />
     <Compile Include="EntityConfig\ContratoEFConfig.cs" />
     <Compile Include="EntityConfig\EnderecoEFConfig.cs" />
@@ -98,6 +98,7 @@
     <Compile Include="Repositories\BancoRepository.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\CentroCustoRepository.cs" />
+    <Compile Include="Repositories\CheckListContratoRepository.cs" />
     <Compile Include="Repositories\EnderecoRepository.cs" />
     <Compile Include="Repositories\EstadoCivilRepository.cs" />
     <Compile Include="Repositories\PagarContaParcelaRepository.cs" />

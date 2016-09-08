@@ -20,7 +20,7 @@ namespace UnibenWeb.Infra.CrossCutting.IoC
             Bind<IBancoService>().To<BancoService>();
             Bind<IEstadoCivilService>().To<EstadoCivilService>();
             Bind<IEnderecoService>().To<EnderecoService>();
-            Bind<ICKContratoService>().To<CKContratoService>();
+            Bind<ICKContratoService>().To<CheckListContratoService>();
             Bind<IBaseService>().To<BaseService>();
             Bind<IPagarContaService>().To<PagarContaService>();
             Bind<ICentroCustoService>().To<CentroCustoService>();

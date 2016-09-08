@@ -80,7 +80,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -94,13 +96,13 @@
     <Compile Include="BancoAppService.cs" />
     <Compile Include="BaseAppService.cs" />
     <Compile Include="CentroCustoAppService.cs" />
-    <Compile Include="CKContratoAppService.cs" />
+    <Compile Include="CheckListContratoAppService.cs" />
     <Compile Include="EnderecoAppService.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="EstadoCivilAppService.cs" />
     <Compile Include="Interface\IBaseAppService.cs" />
     <Compile Include="Interface\ICentroCustoAppService.cs" />
-    <Compile Include="Interface\ICKContratoAppService.cs" />
+    <Compile Include="Interface\ICheckListContratoAppService.cs" />
     <Compile Include="Interface\IBancoAppService.cs" />
     <Compile Include="Interface\IEnderecoAppService.cs" />
     <Compile Include="Interface\IEstadoCivilAppService.cs" />

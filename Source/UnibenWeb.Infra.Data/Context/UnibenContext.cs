@@ -68,6 +68,7 @@ namespace UnibenWeb.Infra.Data.Context
             modelBuilder.Configurations.Add(new CentroCustoEfConfig());
             modelBuilder.Configurations.Add(new PagarContaParcelaEfConfig());
             modelBuilder.Configurations.Add(new ContaContabilEfConfig());
+            modelBuilder.Configurations.Add(new CheckListContratoEfConfig());
             // ~~~
 
             base.OnModelCreating(modelBuilder);
