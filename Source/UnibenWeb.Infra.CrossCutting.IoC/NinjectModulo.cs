@@ -33,6 +33,16 @@ namespace UnibenWeb.Infra.CrossCutting.IoC
             Bind<IEstadoCivilRepository>().To<EstadoCivilRepository>();
             Bind<IPagarContaRepository>().To<PagarContaRepository>();
             Bind<ICentroCustoRepository>().To<CentroCustoRepository>();
+            Bind<IObservacaoRepository>().To<ObservacaoRepository>();
+            Bind<IContaContabilRepository>().To<ContaContabilRepository>();
+            Bind<IPessoaTipoRepository>().To<PessoaTipoRepository>();
+            Bind<IProcedimentoRepository>().To<ProcedimentoRepository>();
+            Bind<IProdutoRepository>().To<ProdutoRepository>();
+            Bind<IProdutoTermoRepository>().To<ProdutoTermoRepository>();
+            Bind<IPropostaRepository>().To<PropostaRepository>();
+            Bind<ITelContatoRepository>().To<TelContatoRepository>();
+            Bind<ITipoContratacaoProdutoRepository>().To<TipoContratacaoProdutoRepository>();
+            Bind<IUnidadeNegocioRepository>().To<UnidadeNegocioRepository>();
 
             // Infra.Data ReadOnly
             Bind<IPessoaReadOnlyRepository>().To<PessoaReadOnlyRepository>();
@@ -41,6 +51,15 @@ namespace UnibenWeb.Infra.CrossCutting.IoC
             Bind<ICKContratoReadOnlyRepository>().To<CKContratoReadOnlyRepository>();
             Bind<IEnderecoReadOnlyRepository>().To<EnderecoReadOnlyRepository>();
             Bind<IBaseReadOnlyRepository>().To<BaseReadOnlyRepository>();
+            Bind<IProcedimentoRepository>().To<ProcedimentoRepository>();
+            Bind<IProdutoRepository>().To<ProdutoRepository>();
+            Bind<IProdutoTermoRepository>().To<ProdutoTermoRepository>();
+            Bind<IPropostaRepository>().To<PropostaRepository>();
+            Bind<ITelContatoRepository>().To<TelContatoRepository>();
+            Bind<ITipoContratacaoProdutoRepository>().To<TipoContratacaoProdutoRepository>();
+            Bind<IUnidadeNegocioRepository>().To<UnidadeNegocioRepository>();
+
+
             //Bind<IEstadoCivilReadOnlyRepository>().To<EstadoCivilReadOnlyRepository>(); -- a implementar
 
             // Data Config ()

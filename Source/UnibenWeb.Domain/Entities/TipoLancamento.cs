@@ -30,7 +30,7 @@ namespace UnibenWeb.Domain.Entities
 
         public bool IsValid()
         {
-            var fiscal = new TipoLancamentoFiscalizarRegras();
+            var fiscal = new TipoLancamentosFiscalizarRegras();
             ResultadoValidacao = fiscal.Validar(this);
             return ResultadoValidacao.IsValid;
         }

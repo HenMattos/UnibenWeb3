@@ -36,7 +36,7 @@ namespace UnibenWeb.Domain.Entities
 
         public bool IsValid()
         {
-            var fiscal = new ContaContabilFiscalizarRegras();
+            var fiscal = new ContaContabeisFiscalizarRegras();
             ResultadoValidacao = fiscal.Validar(this);
             return ResultadoValidacao.IsValid;
         }

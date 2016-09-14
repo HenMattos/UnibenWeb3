@@ -3,9 +3,9 @@ using UnibenWeb.Domain.Entities;
 
 namespace UnibenWeb.Infra.Data.EntityConfig
 {
-    class TelContatoEFConfig : EntityTypeConfiguration<TelContato>
+    class TelContatoEfConfig : EntityTypeConfiguration<TelContato>
     {
-        public TelContatoEFConfig()
+        public TelContatoEfConfig()
         {
             ToTable("TelContatos");
             HasKey(p => p.TelContatoId);

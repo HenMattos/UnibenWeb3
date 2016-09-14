@@ -32,7 +32,18 @@ namespace UnibenWeb.Infra.Data.Context
         public DbSet<PagarContaParcela> PagarContaParcelas { get; set; }
         public DbSet<CentroCusto> CentroCustos { get; set; }
         public DbSet<ContaContabil> ContaContabeis { get; set; }
-
+        public DbSet<Observacao> Observacao { get; set; }
+        public DbSet<FatorModerador> FatorModerador { get; set; }
+        public DbSet<FaixaEtariaProdutoValor> FaixaEtariaProdutoValor { get; set; }
+        public DbSet<GrauParentesco> GrauParentesco { get; set; }
+        public DbSet<Procedimento> Procedimento { get; set; }
+        public DbSet<Produto> Produto { get; set; }
+        public DbSet<ProdutoTermo> ProdutoTermo { get; set; }
+        public DbSet<Proposta> Proposta { get; set; }
+        public DbSet<TelContato> TelContato { get; set; }
+        public DbSet<TipoContratacaoProduto> TipoContratacaoProduto { get; set; }
+        public DbSet<TipoLancamento> TipoLancamento { get; set; }
+        public DbSet<UnidadeNegocio> UnidadeNegocio { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             
@@ -54,7 +65,7 @@ namespace UnibenWeb.Infra.Data.Context
             modelBuilder.Configurations.Add(new PessoaEFConfig());
             modelBuilder.Configurations.Add(new EnderecoEFConfig());
             modelBuilder.Configurations.Add(new EstadoCivilEFConfig());
-            modelBuilder.Configurations.Add(new TelContatoEFConfig());
+            modelBuilder.Configurations.Add(new TelContatoEfConfig());
             modelBuilder.Configurations.Add(new SegmentoAssistencialEFConfig());
             modelBuilder.Configurations.Add(new ModoPagamentoEFConfig());
             modelBuilder.Configurations.Add(new GrauParentescoEFConfig());
@@ -69,6 +80,18 @@ namespace UnibenWeb.Infra.Data.Context
             modelBuilder.Configurations.Add(new PagarContaParcelaEfConfig());
             modelBuilder.Configurations.Add(new ContaContabilEfConfig());
             modelBuilder.Configurations.Add(new CheckListContratoEfConfig());
+            modelBuilder.Configurations.Add(new ObservacaoEfConfig());
+            modelBuilder.Configurations.Add(new FatorModeradorEfConfig());
+            modelBuilder.Configurations.Add(new FaixaEtariaProdutoValorEfConfig());
+            modelBuilder.Configurations.Add(new ProcedimentosEfConfig());
+            modelBuilder.Configurations.Add(new ProdutoEfConfig());
+            modelBuilder.Configurations.Add(new ProdutoTermoEfConfig());
+            modelBuilder.Configurations.Add(new PropostaEfConfig());
+            modelBuilder.Configurations.Add(new TelContatoEfConfig());
+            modelBuilder.Configurations.Add(new TipoContratacaoProdutoEfConfig());
+            modelBuilder.Configurations.Add(new TipoLancamentoEfConfig());
+            modelBuilder.Configurations.Add(new UnidadeNegocioEfConfig());
+
             // ~~~
 
             base.OnModelCreating(modelBuilder);

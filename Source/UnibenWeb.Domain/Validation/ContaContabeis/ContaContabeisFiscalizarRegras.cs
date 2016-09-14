@@ -8,9 +8,9 @@ using UnibenWeb.Domain.Validation.Base;
 
 namespace UnibenWeb.Domain.Validation.ContaContabeis
 {
-    class ContaContabilFiscalizarRegras : FiscalBase<ContaContabil>
+    class ContaContabeisFiscalizarRegras : FiscalBase<ContaContabil>
     {
-        public ContaContabilFiscalizarRegras()
+        public ContaContabeisFiscalizarRegras()
         {
 
         }

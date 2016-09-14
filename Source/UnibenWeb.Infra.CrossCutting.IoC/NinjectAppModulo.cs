@@ -17,6 +17,17 @@ namespace UnibenWeb.Infra.CrossCutting.IoC
             Bind<IBaseAppService>().To<BaseAppService>();
             Bind<IPagarContaAppService>().To<PagarContaAppService>();
             Bind<ICentroCustoAppService>().To<CentroCustoAppService>();
+            Bind<IObservacaoAppService>().To<ObservacaoAppService>();
+            Bind<IContaContabilAppService>().To<ContaContabilAppService>();
+            Bind<IProcedimentoAppService>().To<ProcedimentoAppService>();
+            Bind<IProdutoAppService>().To<ProdutoAppService>();
+            Bind<IProdutoTermoAppService>().To<ProdutoTermoAppService>();
+            Bind<IPropostaAppService>().To<PropostaAppService>();
+            Bind<ITelContatoAppService>().To<TelContatoAppService>();
+            Bind<ITipoContratacaoProdutoAppService>().To<TipoContratacaoProdutoAppService>();
+            Bind<IUnidadeNegocioAppService>().To<UnidadeNegocioAppService>();
+
+
         }
     }
 }

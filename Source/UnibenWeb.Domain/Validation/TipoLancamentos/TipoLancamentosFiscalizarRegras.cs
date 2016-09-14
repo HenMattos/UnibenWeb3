@@ -8,9 +8,9 @@ using UnibenWeb.Domain.Validation.Base;
 
 namespace UnibenWeb.Domain.Validation.TipoLancamentos
 {
-    class TipoLancamentoFiscalizarRegras : FiscalBase<TipoLancamento>
+    class TipoLancamentosFiscalizarRegras : FiscalBase<TipoLancamento>
     {
-        public TipoLancamentoFiscalizarRegras()
+        public TipoLancamentosFiscalizarRegras()
         {
 
         }

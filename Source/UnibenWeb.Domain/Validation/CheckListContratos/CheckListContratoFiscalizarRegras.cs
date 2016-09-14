@@ -1,7 +1,7 @@
 ﻿using UnibenWeb.Domain.Entities;
 using UnibenWeb.Domain.Validation.Base;
 
-namespace UnibenWeb.Domain.Validation.CheckListContrato
+namespace UnibenWeb.Domain.Validation.CheckListContratos
 {
     class CheckListContratoFiscalizarRegras : FiscalBase<CheckListContrato>
     {
